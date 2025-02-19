@@ -1,0 +1,52 @@
+﻿@page "/professors"
+@using BlazorWasmClient.Services
+@using BlazorWasmShared.Models
+@inject ProfessorService ProfessorService
+
+<h3>Professors</h3>
+
+@if (professors == null)
+{
+    <p>Loading...</p>
+}
+else
+{
+    <table>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Department</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var prof in professors)
+            {
+                <tr>
+                    <td>@prof.Name</td>
+                    <td>@prof.Department</td>
+                    <td>
+                        <button @onclick="() => DeleteProfessor(prof.Id)">Delete</button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    private List<Professor>? professors;
+
+    protected override async Task OnInitializedAsync()
+    {
+        professors = await ProfessorService.GetProfessors();
+    }
+
+    private async Task DeleteProfessor(int id)
+    {
+        if (await ProfessorService.DeleteProfessor(id))
+        {
+            professors = await ProfessorService.GetProfessors();
+        }
+    }
+}
