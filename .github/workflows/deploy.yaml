@@ -32,7 +32,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: release/wwwroot
+          path: bin/Release/net8.0/publish/wwwroot
 
       - name: Deploy to GitHub Pages
         id: deployment
