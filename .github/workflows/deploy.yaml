@@ -30,12 +30,12 @@ jobs:
         uses: actions/configure-pages@v3
 
       - name: List contents of release/wwwroot
-        run: ls -al release/wwwroot/EUP
+        run: ls -al release/wwwroot
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: release/wwwroot/EUP
+          path: release/wwwroot
 
       - name: Deploy to GitHub Pages
         id: deployment
