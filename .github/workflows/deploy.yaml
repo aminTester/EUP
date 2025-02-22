@@ -29,13 +29,13 @@ jobs:
       - name: Setup Pages
         uses: actions/configure-pages@v3
 
-      - name: List contents of release/wwwroot
+      - name: List contents of release/wwwroot/EUP
         run: ls -al release/EUP
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: release/EUP
+          path: release/wwwroot/EUP
 
       - name: Deploy to GitHub Pages
         id: deployment
