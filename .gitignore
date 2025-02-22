@@ -4,3 +4,4 @@
 **/out/
 .vs/
 /.vs/BlazorWasmApp/v17/.suo
+release/
