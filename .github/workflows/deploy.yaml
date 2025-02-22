@@ -1,0 +1,39 @@
+name: Deploy Blazor WASM to GitHub Pages
+
+on:
+  push:
+    branches:
+      - main  # Runs the workflow when pushing to the main branch
+  workflow_dispatch:  # Allows manual triggering from GitHub Actions
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: '8.0'  # Use .NET 8 (adjust if needed)
+
+      - name: Publish Blazor WASM
+        run: dotnet publish BlazorWasmClient/BlazorWasmClient.csproj -c Release -o release --nologo
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v3
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: release
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v2
