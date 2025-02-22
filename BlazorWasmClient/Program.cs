@@ -23,7 +23,7 @@ public class Program
 
 
         //my
-        builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri("https://localhost:7051/") });
+        builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri("https://amintester.github.io/EUP/") });
         builder.Services.AddScoped<ProfessorService>();
 
         await builder.Build().RunAsync();
