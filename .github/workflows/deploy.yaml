@@ -24,7 +24,7 @@ jobs:
           dotnet-version: '8.0'  # Use .NET 8 (adjust if needed)
 
       - name: Publish Blazor WASM
-        run: dotnet publish BlazorWasmClient/BlazorWasmClient.csproj -c Release -o release --nologo
+        run: dotnet publish BlazorWasmClient/BlazorWasmClient.csproj -c Release -o release/wwwroot --nologo
 
       - name: Setup Pages
         uses: actions/configure-pages@v3
@@ -32,7 +32,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: release
+          path: release/wwwroot
 
       - name: Deploy to GitHub Pages
         id: deployment
