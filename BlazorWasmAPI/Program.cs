@@ -38,7 +38,7 @@ var port = Environment.GetEnvironmentVariable("PORT") ?? "8080";
 
 var app = builder.Build();
 
-app.Urls.Add($"http://0.0.0.0:{port}"); // Make sure it binds to all IPs
+//app.Urls.Add($"http://0.0.0.0:{port}"); // Make sure it binds to all IPs
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
