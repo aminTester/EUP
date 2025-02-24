@@ -3,6 +3,10 @@
   "WorkspaceRootPath": "D:\\Works\\Blazor\\EUP\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{780C45E6-10EB-4D6D-916A-664DC5EAA29E}|BlazorWasmAPI\\BlazorWasmAPI.csproj|d:\\works\\blazor\\eup\\blazorwasmapi\\blazorwasmapi.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "RelativeMoniker": "D:0:0:{780C45E6-10EB-4D6D-916A-664DC5EAA29E}|BlazorWasmAPI\\BlazorWasmAPI.csproj|solutionrelative:blazorwasmapi\\blazorwasmapi.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{B8A14A80-4BC5-4476-A50C-0BB36F2F82A7}|BlazorWasmShared\\BlazorWasmShared.csproj|d:\\works\\blazor\\eup\\blazorwasmshared\\professor.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{B8A14A80-4BC5-4476-A50C-0BB36F2F82A7}|BlazorWasmShared\\BlazorWasmShared.csproj|solutionrelative:blazorwasmshared\\professor.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -35,6 +39,19 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
+              "Title": "BlazorWasmAPI",
+              "DocumentMoniker": "D:\\Works\\Blazor\\EUP\\BlazorWasmAPI\\BlazorWasmAPI.csproj",
+              "RelativeDocumentMoniker": "BlazorWasmAPI\\BlazorWasmAPI.csproj",
+              "ToolTip": "D:\\Works\\Blazor\\EUP\\BlazorWasmAPI\\BlazorWasmAPI.csproj",
+              "RelativeToolTip": "BlazorWasmAPI\\BlazorWasmAPI.csproj",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAABGAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2025-02-24T10:11:36.229Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
               "Title": "Professor.cs",
               "DocumentMoniker": "D:\\Works\\Blazor\\EUP\\BlazorWasmShared\\Professor.cs",
               "RelativeDocumentMoniker": "BlazorWasmShared\\Professor.cs",
@@ -47,7 +64,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 3,
               "Title": "ProfessorService.cs",
               "DocumentMoniker": "D:\\Works\\Blazor\\EUP\\BlazorWasmClient\\Services\\ProfessorService.cs",
               "RelativeDocumentMoniker": "BlazorWasmClient\\Services\\ProfessorService.cs",
@@ -60,7 +77,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 2,
               "Title": "JsonSerializerContext.cs",
               "DocumentMoniker": "D:\\Works\\Blazor\\EUP\\BlazorWasmShared\\JsonSerializerContext.cs",
               "RelativeDocumentMoniker": "BlazorWasmShared\\JsonSerializerContext.cs",
