@@ -12,10 +12,12 @@ namespace BlazorWasmClient.Services
             _http = http;
         }
 
-        public async Task<List<Professor>> GetProfessors()
+        public async Task<List<Professor>> GetProfessorsByCountry(string? country)
         {
-            return await _http.GetFromJsonAsync<List<Professor>>("api/professors");
+            string url = string.IsNullOrEmpty(country) ? "api/professors" : $"api/professors/country/{country}";
+            return await _http.GetFromJsonAsync<List<Professor>>(url) ?? new List<Professor>();
         }
+
 
         public async Task<Professor> GetProfessor(int id)
         {

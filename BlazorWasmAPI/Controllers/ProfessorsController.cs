@@ -1,4 +1,5 @@
 ﻿using BlazorWasmAPI.Data;
+using BlazorWasmShared.Enum;
 using BlazorWasmShared.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -16,10 +17,11 @@ namespace BlazorWasmAPI.Controllers
             _context = context;
         }
 
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<Professor>>> GetProfessors()
+        [HttpGet("country/{country}")]
+        public async Task<ActionResult<IEnumerable<Professor>>> GetProfessorsByCountry(string country)
         {
-            return await _context.Professors.ToListAsync();
+            var professors = await _context.Professors.Where(p => p.Country == Enum.Parse<CountryCode>(country)).ToListAsync();
+            return Ok(professors);
         }
 
         [HttpGet("{id}")]

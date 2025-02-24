@@ -1,10 +1,10 @@
-﻿@page "/professors"
+﻿@page "/professors/{country?}"
 @using BlazorWasmClient.Services
-@using BlazorWasmShared.Enum
-@using BlazorWasmShared.Models
 @inject ProfessorService ProfessorService
+@using BlazorWasmShared.Models
+@using BlazorWasmShared.Enum
 
-<h3>Professors</h3>
+<h3>Professors of @SelectedCountry</h3>
 
 @if (professors == null)
 {
@@ -12,51 +12,79 @@
 }
 else
 {
-    <div class="container-fluid ">
-        <table class="table table-hover table-striped">
-            <thead class="alert-dark ">
-                <tr class="d-flex">
-                    <th class="col-xx-1">Country</th>
-                    <th class="col-sm-2">University</th>
-                    <th class="col-sm-2">Name</th>
-                    <th class="col-sm-1">Website</th>
-                    @*<th  class="col-sm-2" >Email</th>*@
-                    <th class="col-xx-1">related</th>
-                    <th class="col-sm-1">EDate</th>
-                    @* <th  class="col-xx-2" >Result</th>*@
-                    <th class="col-sm-1">Update</th>
+    <table class="table table-hover table-striped">
+        <thead>
+            <tr>
+                <th @onclick="() => SortBy(nameof(Professor.FullName))">Full Name</th>
+                <th>Keywords</th>
+                <th @onclick="() => SortBy(nameof(Professor.Papers))">Papers</th>
+                <th>WOS</th>
+                <th>Web</th>
+                <th>Email</th>
+                <th @onclick="() => SortBy(nameof(Professor.University))">University</th>
+                <th @onclick="() => SortBy(nameof(Professor.Related))">Related</th>
+                <th @onclick="() => SortBy(nameof(Professor.EmailDate))">Email Date</th>
+                <th @onclick="() => SortBy(nameof(Professor.UpdateDate))">Update Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var prof in professors)
+            {
+                <tr class="@(GetRowColor(prof.Result))">
+                    <td>@prof.FullName</td>
+                    <td>@prof.Keywords</td>
+                    <td>@prof.Papers</td>
+                    <td><a href="@prof.Wos" target="_blank">WOS</a></td>
+                    <td><a href="@prof.Web" target="_blank">Web</a></td>
+                    <td><a href="mailto:@prof.Email">@prof.Email</a></td>
+                    <td>@prof.University</td>
+                    <td><input type="checkbox" checked="@prof.Related" disabled /></td>
+                    <td>@prof.EmailDate?.ToShortDateString()</td>
+                    <td>@prof.UpdateDate?.ToString("g")</td>
                 </tr>
-            </thead>
-            <tbody>
-                @foreach (var Prof in professors)
-                {
-                    <tr class="d-flex @(Prof.Result==ResultType.Accept?"table-success":"")
-                           @(Prof.Result==ResultType.Reject?"table-danger":"")
-                           @(Prof.Result==ResultType.Progress?"table-primary":"")  ">
-                        <td class="col-xx-1">@Prof.Country</td>
-                        <td class="col-sm-2">@Prof.University.Trim()</td>
-                        <td class="col-sm-2"> <NavLink href="@($"prof/edit/{Prof.Id}")">@Prof.FullName.Trim()</NavLink>  </td>
-                        <td class="col-sm-1"> <a href="@(@Prof.Web.Trim())">Website</a> </td>
-                        @*<td class="col-sm-2"><a href="@(@Prof.Email)">@(@Prof.Email)</a></td>*@
-                        <td class="col-xx-1">@Prof.Related</td>
-                        <td class="col-sm-1">@Prof.EmailDate.ToString()</td>
-                        @* <td class="col-xx-2 success"> @Prof.Result</td>*@
-
-                        <td class="col-sm-1">@Prof.UpdateDate.ToString()</td>
-                    </tr>
-                }
-            </tbody>
-        </table>
-    </div>
+            }
+        </tbody>
+    </table>
 }
 
 @code {
+    [Parameter] public string? country { get; set; }
     private List<Professor>? professors;
+    private string SelectedCountry => country ?? "All";
+    private string sortColumn = nameof(Professor.FullName);
+    private bool ascending = true;
 
     protected override async Task OnInitializedAsync()
     {
-        professors = await ProfessorService.GetProfessors();
+        professors = await ProfessorService.GetProfessorsByCountry(country);
     }
 
-   
+    private void SortBy(string column)
+    {
+        if (sortColumn == column)
+        {
+            ascending = !ascending;
+        }
+        else
+        {
+            sortColumn = column;
+            ascending = true;
+        }
+
+        professors = ascending
+            ? professors.OrderBy(p => p.GetType().GetProperty(sortColumn).GetValue(p, null)).ToList()
+            : professors.OrderByDescending(p => p.GetType().GetProperty(sortColumn).GetValue(p, null)).ToList();
+    }
+
+    private string GetRowColor(ResultType? result)
+    {
+        return result switch
+        {
+            ResultType.Emailed => "table-secondary",
+            ResultType.Progress => "table-primary",
+            ResultType.Reject => "table-danger",
+            ResultType.Accept => "table-success",
+            _ => ""
+        };
+    }
 }
