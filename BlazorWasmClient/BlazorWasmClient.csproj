@@ -5,7 +5,7 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
 	<StaticWebAssetBasePath>EUP</StaticWebAssetBasePath>
-	  <Nullable>disable</Nullable>
+	  <Nullable>enable</Nullable>
   </PropertyGroup>
 
   <ItemGroup>
