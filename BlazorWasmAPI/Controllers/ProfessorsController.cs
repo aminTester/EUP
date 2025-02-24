@@ -17,7 +17,7 @@ namespace BlazorWasmAPI.Controllers
             _context = context;
         }
 
-        [HttpGet("{country}")]
+        [HttpGet("country/{country}")]
         public async Task<ActionResult<IEnumerable<Professor>>> GetProfessorsByCountry(string country)
         {
             var professors = await _context.Professors.Where(p => p.Country == Enum.Parse<CountryCode>(country)).ToListAsync();
