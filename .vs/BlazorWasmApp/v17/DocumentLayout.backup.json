@@ -3,8 +3,16 @@
   "WorkspaceRootPath": "D:\\Works\\Blazor\\EUP\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{B8A14A80-4BC5-4476-A50C-0BB36F2F82A7}|BlazorWasmShared\\BlazorWasmShared.csproj|d:\\works\\blazor\\eup\\blazorwasmshared\\professor.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B8A14A80-4BC5-4476-A50C-0BB36F2F82A7}|BlazorWasmShared\\BlazorWasmShared.csproj|solutionrelative:blazorwasmshared\\professor.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{B8A14A80-4BC5-4476-A50C-0BB36F2F82A7}|BlazorWasmShared\\BlazorWasmShared.csproj|d:\\works\\blazor\\eup\\blazorwasmshared\\jsonserializercontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{B8A14A80-4BC5-4476-A50C-0BB36F2F82A7}|BlazorWasmShared\\BlazorWasmShared.csproj|solutionrelative:blazorwasmshared\\jsonserializercontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1416DD41-D232-4014-982E-2E7DD34A4151}|BlazorWasmClient\\BlazorWasmClient.csproj|d:\\works\\blazor\\eup\\blazorwasmclient\\services\\professorservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1416DD41-D232-4014-982E-2E7DD34A4151}|BlazorWasmClient\\BlazorWasmClient.csproj|solutionrelative:blazorwasmclient\\services\\professorservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -27,12 +35,38 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
+              "Title": "Professor.cs",
+              "DocumentMoniker": "D:\\Works\\Blazor\\EUP\\BlazorWasmShared\\Professor.cs",
+              "RelativeDocumentMoniker": "BlazorWasmShared\\Professor.cs",
+              "ToolTip": "D:\\Works\\Blazor\\EUP\\BlazorWasmShared\\Professor.cs",
+              "RelativeToolTip": "BlazorWasmShared\\Professor.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAABFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-24T09:07:08.39Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "ProfessorService.cs",
+              "DocumentMoniker": "D:\\Works\\Blazor\\EUP\\BlazorWasmClient\\Services\\ProfessorService.cs",
+              "RelativeDocumentMoniker": "BlazorWasmClient\\Services\\ProfessorService.cs",
+              "ToolTip": "D:\\Works\\Blazor\\EUP\\BlazorWasmClient\\Services\\ProfessorService.cs",
+              "RelativeToolTip": "BlazorWasmClient\\Services\\ProfessorService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABcAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-24T09:06:30.59Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
               "Title": "JsonSerializerContext.cs",
               "DocumentMoniker": "D:\\Works\\Blazor\\EUP\\BlazorWasmShared\\JsonSerializerContext.cs",
               "RelativeDocumentMoniker": "BlazorWasmShared\\JsonSerializerContext.cs",
-              "ToolTip": "D:\\Works\\Blazor\\EUP\\BlazorWasmShared\\JsonSerializerContext.cs*",
-              "RelativeToolTip": "BlazorWasmShared\\JsonSerializerContext.cs*",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAAAAAAAAAAAAA==",
+              "ToolTip": "D:\\Works\\Blazor\\EUP\\BlazorWasmShared\\JsonSerializerContext.cs",
+              "RelativeToolTip": "BlazorWasmShared\\JsonSerializerContext.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAqwA8AAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-02-24T09:04:49.51Z",
               "EditorCaption": ""
