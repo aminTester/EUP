@@ -1,7 +1,20 @@
 {
   "Version": 1,
   "WorkspaceRootPath": "D:\\Works\\Blazor\\EUP\\",
-  "Documents": [],
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{B8A14A80-4BC5-4476-A50C-0BB36F2F82A7}|BlazorWasmShared\\BlazorWasmShared.csproj|d:\\works\\blazor\\eup\\blazorwasmshared\\blazorwasmshared.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "RelativeMoniker": "D:0:0:{B8A14A80-4BC5-4476-A50C-0BB36F2F82A7}|BlazorWasmShared\\BlazorWasmShared.csproj|solutionrelative:blazorwasmshared\\blazorwasmshared.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{780C45E6-10EB-4D6D-916A-664DC5EAA29E}|BlazorWasmAPI\\BlazorWasmAPI.csproj|d:\\works\\blazor\\eup\\blazorwasmapi\\blazorwasmapi.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "RelativeMoniker": "D:0:0:{780C45E6-10EB-4D6D-916A-664DC5EAA29E}|BlazorWasmAPI\\BlazorWasmAPI.csproj|solutionrelative:blazorwasmapi\\blazorwasmapi.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1416DD41-D232-4014-982E-2E7DD34A4151}|BlazorWasmClient\\BlazorWasmClient.csproj|d:\\works\\blazor\\eup\\blazorwasmclient\\blazorwasmclient.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "RelativeMoniker": "D:0:0:{1416DD41-D232-4014-982E-2E7DD34A4151}|BlazorWasmClient\\BlazorWasmClient.csproj|solutionrelative:blazorwasmclient\\blazorwasmclient.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+    }
+  ],
   "DocumentGroupContainers": [
     {
       "Orientation": 0,
@@ -9,7 +22,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": -1,
+          "SelectedChildIndex": 2,
           "Children": [
             {
               "$type": "Bookmark",
@@ -18,6 +31,45 @@
             {
               "$type": "Bookmark",
               "Name": "ST:128:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "BlazorWasmShared",
+              "DocumentMoniker": "D:\\Works\\Blazor\\EUP\\BlazorWasmShared\\BlazorWasmShared.csproj",
+              "RelativeDocumentMoniker": "BlazorWasmShared\\BlazorWasmShared.csproj",
+              "ToolTip": "D:\\Works\\Blazor\\EUP\\BlazorWasmShared\\BlazorWasmShared.csproj",
+              "RelativeToolTip": "BlazorWasmShared\\BlazorWasmShared.csproj",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAABGAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2025-02-24T10:42:28.286Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "BlazorWasmAPI",
+              "DocumentMoniker": "D:\\Works\\Blazor\\EUP\\BlazorWasmAPI\\BlazorWasmAPI.csproj",
+              "RelativeDocumentMoniker": "BlazorWasmAPI\\BlazorWasmAPI.csproj",
+              "ToolTip": "D:\\Works\\Blazor\\EUP\\BlazorWasmAPI\\BlazorWasmAPI.csproj",
+              "RelativeToolTip": "BlazorWasmAPI\\BlazorWasmAPI.csproj",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUAAABGAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2025-02-24T10:42:18.38Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "BlazorWasmClient",
+              "DocumentMoniker": "D:\\Works\\Blazor\\EUP\\BlazorWasmClient\\BlazorWasmClient.csproj",
+              "RelativeDocumentMoniker": "BlazorWasmClient\\BlazorWasmClient.csproj",
+              "ToolTip": "D:\\Works\\Blazor\\EUP\\BlazorWasmClient\\BlazorWasmClient.csproj",
+              "RelativeToolTip": "BlazorWasmClient\\BlazorWasmClient.csproj",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAABGAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2025-02-24T10:23:25.496Z",
+              "EditorCaption": ""
             }
           ]
         }
