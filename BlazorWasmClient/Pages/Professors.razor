@@ -1,5 +1,6 @@
 ﻿@page "/professors"
 @using BlazorWasmClient.Services
+@using BlazorWasmShared.Enum
 @using BlazorWasmShared.Models
 @inject ProfessorService ProfessorService
 
@@ -11,27 +12,42 @@
 }
 else
 {
-    <table>
-        <thead>
-            <tr>
-                <th>Name</th>
-                <th>Department</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var prof in professors)
-            {
-                <tr>
-                    <td>@prof.Name</td>
-                    <td>@prof.Department</td>
-                    <td>
-                        <button @onclick="() => DeleteProfessor(prof.Id)">Delete</button>
-                    </td>
+    <div class="container-fluid ">
+        <table class="table table-hover table-striped">
+            <thead class="alert-dark ">
+                <tr class="d-flex">
+                    <th class="col-xx-1">Country</th>
+                    <th class="col-sm-2">University</th>
+                    <th class="col-sm-2">Name</th>
+                    <th class="col-sm-1">Website</th>
+                    @*<th  class="col-sm-2" >Email</th>*@
+                    <th class="col-xx-1">related</th>
+                    <th class="col-sm-1">EDate</th>
+                    @* <th  class="col-xx-2" >Result</th>*@
+                    <th class="col-sm-1">Update</th>
                 </tr>
-            }
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                @foreach (var Prof in professors)
+                {
+                    <tr class="d-flex @(Prof.Result==ResultType.Accept?"table-success":"")
+                           @(Prof.Result==ResultType.Reject?"table-danger":"")
+                           @(Prof.Result==ResultType.Progress?"table-primary":"")  ">
+                        <td class="col-xx-1">@Prof.Country</td>
+                        <td class="col-sm-2">@Prof.University.Trim()</td>
+                        <td class="col-sm-2"> <NavLink href="@($"prof/edit/{Prof.Id}")">@Prof.FullName.Trim()</NavLink>  </td>
+                        <td class="col-sm-1"> <a href="@(@Prof.Web.Trim())">Website</a> </td>
+                        @*<td class="col-sm-2"><a href="@(@Prof.Email)">@(@Prof.Email)</a></td>*@
+                        <td class="col-xx-1">@Prof.Related</td>
+                        <td class="col-sm-1">@Prof.EmailDate.ToString()</td>
+                        @* <td class="col-xx-2 success"> @Prof.Result</td>*@
+
+                        <td class="col-sm-1">@Prof.UpdateDate.ToString()</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
 }
 
 @code {
@@ -42,11 +58,5 @@ else
         professors = await ProfessorService.GetProfessors();
     }
 
-    private async Task DeleteProfessor(int id)
-    {
-        if (await ProfessorService.DeleteProfessor(id))
-        {
-            professors = await ProfessorService.GetProfessors();
-        }
-    }
+   
 }

@@ -1,4 +1,5 @@
-﻿<div class="top-row ps-3 navbar navbar-dark">
+﻿@using BlazorWasmShared.Enum
+<div class="top-row ps-3 navbar navbar-dark">
     <div class="container-fluid">
         <a class="navbar-brand" href="">BlazorWasmClient</a>
         <button title="Navigation menu" class="navbar-toggler" @onclick="ToggleNavMenu">
@@ -15,15 +16,17 @@
             </NavLink>
         </div>
         <div class="nav-item px-3">
-            <NavLink class="nav-link" href="counter">
-                <span class="bi bi-plus-square-fill-nav-menu" aria-hidden="true"></span> Counter
-            </NavLink>
-        </div>
-        <div class="nav-item px-3">
             <NavLink class="nav-link" href="professors">
                 <span class="bi bi-list-nested-nav-menu" aria-hidden="true"></span> Prof
             </NavLink>
         </div>
+
+        <ul>
+            @foreach (var country in Enum.GetValues(typeof(CountryCode)).Cast<CountryCode>())
+            {
+                <li><a href="professors/@country">@country</a></li>
+            }
+        </ul>
     </nav>
 </div>
 
