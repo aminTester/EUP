@@ -32,7 +32,13 @@ builder.Services.AddCors(options =>
 });
 
 
+// Get the port from environment variable or use 8080 (for local development)
+var port = Environment.GetEnvironmentVariable("PORT") ?? "8080";
+
+
 var app = builder.Build();
+
+app.Urls.Add($"http://0.0.0.0:{port}"); // Make sure it binds to all IPs
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
