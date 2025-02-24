@@ -13,32 +13,25 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 //builder.Services.AddDbContext<AppDbContext>(options =>
 //    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+//postgresql
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 //my
-var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
-
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy(name: MyAllowSpecificOrigins,
+    options.AddPolicy(name: "AllowGitHubPages",
         policy =>
         {
-            policy.WithOrigins("https://amintester.github.io/EUP")
+            policy.WithOrigins("https://amintester.github.io")
                   .AllowAnyHeader()
-                  .AllowAnyMethod()
-                  .AllowCredentials();
+                  .AllowAnyMethod();
+                 // .AllowCredentials();
         });
 });
 
-
-// Get the port from environment variable or use 8080 (for local development)
-var port = Environment.GetEnvironmentVariable("PORT") ?? "8080";
-
-
 var app = builder.Build();
-
-//app.Urls.Add($"http://0.0.0.0:{port}"); // Make sure it binds to all IPs
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -51,7 +44,7 @@ if (app.Environment.IsDevelopment())
 //app.UseHttpsRedirection();
 
 //my
-app.UseCors(MyAllowSpecificOrigins);
+app.UseCors("AllowGitHubPages");
 app.UseAuthorization();
 app.MapControllers();
 
