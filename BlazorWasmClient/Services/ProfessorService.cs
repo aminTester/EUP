@@ -1,5 +1,6 @@
 ﻿using System.Net.Http.Json;
 using BlazorWasmShared.Models;
+using Microsoft.AspNetCore.Components.Forms;
 
 namespace BlazorWasmClient.Services
 {
@@ -18,28 +19,38 @@ namespace BlazorWasmClient.Services
             return await _http.GetFromJsonAsync<List<Professor>>(url) ?? new List<Professor>();
         }
 
-
-        public async Task<Professor> GetProfessor(int id)
+        public async Task<Professor?> GetProfessorById(int id)
         {
             return await _http.GetFromJsonAsync<Professor>($"api/professors/{id}");
         }
 
-        public async Task<bool> AddProfessor(Professor professor)
+        public async Task UpdateProfessor(Professor professor)
         {
-            var response = await _http.PostAsJsonAsync("api/professors", professor);
-            return response.IsSuccessStatusCode;
+            await _http.PutAsJsonAsync("api/professors", professor);
         }
 
-        public async Task<bool> UpdateProfessor(int id, Professor professor)
+        public async Task<string> ExportProfessorsToExcel()
         {
-            var response = await _http.PutAsJsonAsync($"api/professors/{id}", professor);
-            return response.IsSuccessStatusCode;
+            var response = await _http.GetAsync("api/professors/export");
+            if (response.IsSuccessStatusCode)
+            {
+                var fileName = "Professors.xlsx";
+                var fileBytes = await response.Content.ReadAsByteArrayAsync();
+                var fileUrl = $"data:application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;base64,{Convert.ToBase64String(fileBytes)}";
+
+                return fileUrl;
+            }
+            return string.Empty;
         }
 
-        public async Task<bool> DeleteProfessor(int id)
+        public async Task ImportProfessorsFromExcel(IBrowserFile file)
         {
-            var response = await _http.DeleteAsync($"api/professors/{id}");
-            return response.IsSuccessStatusCode;
+            var content = new MultipartFormDataContent();
+            var fileStream = file.OpenReadStream(10485760); // 10MB max
+            var fileContent = new StreamContent(fileStream);
+            content.Add(fileContent, "file", file.Name);
+
+            await _http.PostAsync("api/professors/import", content);
         }
     }
 }

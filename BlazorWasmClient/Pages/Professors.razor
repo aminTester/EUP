@@ -1,10 +1,14 @@
 ﻿@page "/professors/{country?}"
 @using BlazorWasmClient.Services
-@inject ProfessorService ProfessorService
 @using BlazorWasmShared.Models
 @using BlazorWasmShared.Enum
+@inject ProfessorService ProfessorService
+@inject NavigationManager Navigation
 
-<h3>Professors of @SelectedCountry</h3>
+<h3>Professors of @(country ?? "All Countries")</h3>
+
+<button @onclick="ExportProfessors">Export to Excel</button>
+<input type="file" @onchange="ImportProfessors" accept=".xlsx" />
 
 @if (professors == null)
 {
@@ -12,46 +16,47 @@
 }
 else
 {
-    <table class="table table-hover table-striped">
-        <thead>
-            <tr>
-                <th @onclick="() => SortBy(nameof(Professor.FullName))">Full Name</th>
-                <th>Keywords</th>
-                <th @onclick="() => SortBy(nameof(Professor.Papers))">Papers</th>
-                <th>WOS</th>
-                <th>Web</th>
-                <th>Email</th>
-                <th @onclick="() => SortBy(nameof(Professor.University))">University</th>
-                <th @onclick="() => SortBy(nameof(Professor.Related))">Related</th>
-                <th @onclick="() => SortBy(nameof(Professor.EmailDate))">Email Date</th>
-                <th @onclick="() => SortBy(nameof(Professor.UpdateDate))">Update Date</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var prof in professors)
-            {
-                <tr class="@(GetRowColor(prof.Result))">
-                    <td>@prof.FullName</td>
-                    <td>@prof.Keywords</td>
-                    <td>@prof.Papers</td>
-                    <td><a href="@prof.Wos" target="_blank">WOS</a></td>
-                    <td><a href="@prof.Web" target="_blank">Web</a></td>
-                    <td><a href="mailto:@prof.Email">@prof.Email</a></td>
-                    <td>@prof.University</td>
-                    <td><input type="checkbox" checked="@prof.Related" disabled /></td>
-                    <td>@prof.EmailDate?.ToShortDateString()</td>
-                    <td>@prof.UpdateDate?.ToString("g")</td>
+    <div class="container-fluid">
+        <table class="table table-hover table-striped">
+            <thead>
+                <tr>
+                    <th @onclick="() => SortBy(nameof(Professor.FullName))">Full Name</th>
+                    <th @onclick="() => SortBy(nameof(Professor.Keywords))">Keywords</th>
+                    <th @onclick="() => SortBy(nameof(Professor.Papers))">Papers</th>
+                    <th>WOS</th>
+                    <th>Web</th>
+                    <th @onclick="() => SortBy(nameof(Professor.University))">University</th>
+                    <th @onclick="() => SortBy(nameof(Professor.Related))">Related</th>
+                    <th @onclick="() => SortBy(nameof(Professor.EmailDate))">Email Date</th>
+                    <th @onclick="() => SortBy(nameof(Professor.UpdateDate))">Update Date</th>
                 </tr>
-            }
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                @foreach (var prof in professors)
+                {
+                    <tr class="@(GetRowClass(prof.Result))">
+                        <td>
+                            <a href="edit-professor/@prof.Id">@prof.FullName</a>
+                        </td>
+                        <td>@prof.Keywords</td>
+                        <td>@prof.Papers</td>
+                        <td><a href="https://@prof.Wos" target="_blank">WOS</a></td>
+                        <td><a href="https://@prof.Web" target="_blank">Website</a></td>
+                        <td>@prof.University</td>
+                        <td><input type="checkbox" checked="@prof.Related" disabled /></td>
+                        <td>@prof.EmailDate?.ToShortDateString()</td>
+                        <td>@prof.UpdateDate?.ToString("g")</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
 }
 
 @code {
-    [Parameter] public string? country { get; set; }
     private List<Professor>? professors;
-    private string SelectedCountry => country ?? "All";
-    private string sortColumn = nameof(Professor.FullName);
+    [Parameter] public string? country { get; set; }
+    private string currentSortColumn = "";
     private bool ascending = true;
 
     protected override async Task OnInitializedAsync()
@@ -59,24 +64,7 @@ else
         professors = await ProfessorService.GetProfessorsByCountry(country);
     }
 
-    private void SortBy(string column)
-    {
-        if (sortColumn == column)
-        {
-            ascending = !ascending;
-        }
-        else
-        {
-            sortColumn = column;
-            ascending = true;
-        }
-
-        professors = ascending
-            ? professors.OrderBy(p => p.GetType().GetProperty(sortColumn).GetValue(p, null)).ToList()
-            : professors.OrderByDescending(p => p.GetType().GetProperty(sortColumn).GetValue(p, null)).ToList();
-    }
-
-    private string GetRowColor(ResultType? result)
+    private string GetRowClass(ResultType? result)
     {
         return result switch
         {
@@ -86,5 +74,42 @@ else
             ResultType.Accept => "table-success",
             _ => ""
         };
+    }
+
+    private void SortBy(string column)
+    {
+        if (currentSortColumn == column)
+        {
+            ascending = !ascending;
+        }
+        else
+        {
+            currentSortColumn = column;
+            ascending = true;
+        }
+
+        professors = ascending
+            ? professors.OrderBy(p => GetPropertyValue(p, column)).ToList()
+            : professors.OrderByDescending(p => GetPropertyValue(p, column)).ToList();
+    }
+
+    private object? GetPropertyValue(Professor prof, string propertyName)
+    {
+        return typeof(Professor).GetProperty(propertyName)?.GetValue(prof);
+    }
+
+    private async Task ExportProfessors()
+    {
+        var fileUrl = await ProfessorService.ExportProfessorsToExcel();
+        Navigation.NavigateTo(fileUrl, true);
+    }
+
+    private async Task ImportProfessors(ChangeEventArgs e)
+    {
+        if (e.Value is not null and IBrowserFile file)
+        {
+            await ProfessorService.ImportProfessorsFromExcel(file);
+            professors = await ProfessorService.GetProfessorsByCountry(country);
+        }
     }
 }
