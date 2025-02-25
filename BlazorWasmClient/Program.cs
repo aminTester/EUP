@@ -12,7 +12,7 @@ public class Program
         builder.RootComponents.Add<App>("#app");
         builder.RootComponents.Add<HeadOutlet>("head::after");
 
-        builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
+
 
         //builder.Services.AddOidcAuthentication(options =>
         //{
@@ -23,8 +23,14 @@ public class Program
 
 
         //my
-        builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri("https://eup-server.onrender.com/") });
-        builder.Services.AddScoped<ProfessorService>();
+        //builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri("https://eup-server.onrender.com/") });
+        builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(sp.GetRequiredService<IConfiguration>()["ApiBaseUrl"]) });
+        builder.Services.AddScoped<ProfessorService>(sp =>
+        {
+            var config = sp.GetRequiredService<IConfiguration>();
+            var baseUrl = config["ApiBaseUrl"];
+            return new ProfessorService(sp.GetRequiredService<HttpClient>(), baseUrl);
+        });
 
         await builder.Build().RunAsync();
     }
