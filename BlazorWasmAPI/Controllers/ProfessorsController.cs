@@ -34,21 +34,47 @@ namespace BlazorWasmAPI.Controllers
             return professor;
         }
 
-        [HttpPut]
-        public async Task<IActionResult> UpdateProfessor(Professor professor)
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateProfessor(int id, Professor professor)
         {
-            var existingProfessor = await _context.Professors.FindAsync(professor.Id);
-            if (existingProfessor == null)
-                return NotFound();
+            if (id != professor.Id)
+            {
+                return BadRequest("Professor ID mismatch.");
+            }
 
-            existingProfessor.Text = professor.Text;
-            existingProfessor.Related = professor.Related;
-            existingProfessor.EmailDate = professor.EmailDate;
-            existingProfessor.Result = professor.Result;
-            existingProfessor.UpdateDate = DateTime.Now;
+            // Ensure DateTime fields are stored in UTC
+            professor.UpdateDate = DateTime.UtcNow;
 
-            await _context.SaveChangesAsync();
+            if (professor.EmailDate != null)  // Only convert if it's not null
+            {
+                professor.EmailDate = professor.EmailDate.ToUniversalTime();
+            }
+
+            _context.Entry(professor).State = EntityState.Modified;
+
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!ProfessorExists(id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
             return NoContent();
+        }
+
+        private bool ProfessorExists(int id)
+        {
+            // Check if the professor exists in the database
+            return _context.Professors.Any(p => p.Id == id);
         }
 
         [HttpGet("export")]

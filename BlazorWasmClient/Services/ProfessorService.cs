@@ -7,10 +7,13 @@ namespace BlazorWasmClient.Services
     public class ProfessorService
     {
         private readonly HttpClient _http;
+        private readonly string _baseUrl;
+     
 
-        public ProfessorService(HttpClient http)
+        public ProfessorService(HttpClient http, string baseUrl)
         {
             _http = http;
+            this._baseUrl = baseUrl;
         }
 
         public async Task<List<Professor>> GetProfessorsByCountry(string? country)
@@ -26,7 +29,18 @@ namespace BlazorWasmClient.Services
 
         public async Task UpdateProfessor(Professor professor)
         {
-            await _http.PutAsJsonAsync("api/professors", professor);
+            professor.UpdateDate = DateTime.UtcNow; // Ensure UpdateDate is always in UTC
+            if (professor.EmailDate!=null)
+            {
+                professor.EmailDate = professor.EmailDate.ToUniversalTime(); // Convert to UTC
+            }
+
+            var response = await _http.PutAsJsonAsync($"{_baseUrl}/api/professors/{professor.Id}", professor);
+            if (!response.IsSuccessStatusCode)
+            {
+                var errorMsg = await response.Content.ReadAsStringAsync();
+                throw new Exception($"Failed to update professor: {errorMsg}");
+            }
         }
 
         public async Task<string> ExportProfessorsToExcel()

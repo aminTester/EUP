@@ -17,10 +17,20 @@ namespace BlazorWasmShared.Models
         public string? University { get; set; }
         public int Papers { get; set; }
         public bool Related { get; set; }
-        public DateTime? EmailDate { get; set; }
-        public DateTime? UpdateDate { get; set; }
         public ResultType? Result { get; set; }
         public CountryCode? Country { get; set; }
+        private DateTime _emailDate { get; set; }
+        private DateTime _updateDate;
+        public DateTime EmailDate
+        {
+            get => _emailDate;
+            set => _emailDate = DateTime.SpecifyKind(value, DateTimeKind.Utc); // Ensure it's UTC
+        }
+        public DateTime UpdateDate
+        {
+            get => _updateDate;
+            set => _updateDate = DateTime.SpecifyKind(value, DateTimeKind.Utc); // Ensure it's UTC
+        }
 
     }
 }
