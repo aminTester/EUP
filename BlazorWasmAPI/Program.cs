@@ -23,9 +23,9 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 
 
 //my
-//local ==  "https://localhost:7025/"
-//github  =  "https://amintester.github.io/"
-var ClientBaseUrl = "https://amintester.github.io/";
+//local ==  "https://localhost:7025"
+//github  =  "https://amintester.github.io"
+var ClientBaseUrl = "https://amintester.github.io";
 builder.Services.AddCors(options =>
 {
     options.AddPolicy(name: "AllowGitHubPages",
