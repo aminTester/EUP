@@ -61,30 +61,25 @@ namespace BlazorWasmClient.Services
 
         public async Task ImportProfessorsFromExcel(IBrowserFile file)
         {
+            if (file == null)
+            {
+                Console.WriteLine("No file selected.");
+                return;
+            }
+
             var content = new MultipartFormDataContent();
             var fileStream = file.OpenReadStream(10485760); // 10MB max
             var fileContent = new StreamContent(fileStream);
             content.Add(fileContent, "file", file.Name);
 
-            // Log or break here to make sure the file is sent correctly
-            try
+            var response = await _http.PostAsync("api/professors/import", content);
+
+            if (!response.IsSuccessStatusCode)
             {
-                var response = await _http.PostAsync("api/professors/import", content);
-                if (response.IsSuccessStatusCode)
-                {
-                    Console.WriteLine("IMPORT OK with this status code : " +response.StatusCode);
-                }
-                else
-                {
-                    Console.WriteLine("IMPORT Error with this status code : " + response.StatusCode);
-                }
-            }
-            catch (Exception ex)
-            {
-                // Handle exception or log
-                Console.WriteLine($"Error: {ex.Message}");
+                Console.WriteLine($"Error: {response.StatusCode}");
             }
         }
+
 
     }
 }

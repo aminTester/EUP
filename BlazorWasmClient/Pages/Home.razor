@@ -9,27 +9,33 @@
 <h1>Hello, world!</h1>
 
 <button @onclick="ExportProfessors">Export to Excel</button>
-<input type="file" @onchange="ImportProfessors" accept=".xlsx" />
+<input type="file" @onchange="HandleFileSelected" accept=".xlsx" />
+<button @onclick="ImportProfessors">Upload</button>
 @code {
+    private IBrowserFile selectedFile;
     private List<Professor>? professors;
+    private void HandleFileSelected(ChangeEventArgs e)
+    {
+        if (e.Value is not null)
+        {
+            selectedFile = ((IBrowserFile)e.Value);
+        }
+    }
     private async Task ExportProfessors()
     {
         var fileUrl = await ProfessorService.ExportProfessorsToExcel();
         Navigation.NavigateTo(fileUrl, true);
     }
 
-    private async Task ImportProfessors(ChangeEventArgs e)
+    private async Task ImportProfessors()
     {
-        var file = e.Value as IBrowserFile;
-        if (file != null)
+        if (selectedFile is null)
         {
-            await ProfessorService.ImportProfessorsFromExcel(file);
+            Console.WriteLine("No file selected.");
+            return;
         }
-        else
-        {
-            // Handle the case where no file is selected
-            Console.WriteLine("No file selected or invalid file type.");
-        }
+
+        await ProfessorService.ImportProfessorsFromExcel(selectedFile);
     }
 
 }

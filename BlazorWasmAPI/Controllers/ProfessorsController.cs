@@ -108,44 +108,49 @@ namespace BlazorWasmAPI.Controllers
         }
 
         [HttpPost("import")]
-        public async Task<IActionResult> ImportProfessorsFromExcel(IFormFile file)
+        public async Task<IActionResult> ImportProfessorsFromExcel([FromForm] IFormFile file)
         {
             if (file == null || file.Length == 0)
             {
-                return BadRequest("No file uploaded.");
+                return BadRequest("No file selected or invalid file type.");
             }
 
             using var stream = new MemoryStream();
             await file.CopyToAsync(stream);
             using var package = new ExcelPackage(stream);
             var worksheet = package.Workbook.Worksheets[0];
-            var rowCount = worksheet.Dimension.Rows;
-            var properties = typeof(Professor).GetProperties();
 
+            if (worksheet == null)
+            {
+                return BadRequest("Invalid file format.");
+            }
+
+            var rowCount = worksheet.Dimension.Rows;
             var importedProfessors = new List<Professor>();
 
-            for (int row = 2; row <= rowCount; row++) // Start from row 2 (skip headers)
+            for (int row = 2; row <= rowCount; row++) // Skip header row
             {
-                var professor = new Professor();
-
-                for (int col = 1; col <= properties.Length; col++)
+                var professor = new Professor
                 {
-                    var property = properties[col - 1];
-
-                    // Skip setting the ID column if it exists
-                    if (property.Name == "Id") continue;
-
-                    var value = worksheet.Cells[row, col].Value?.ToString();
-                    if (!string.IsNullOrEmpty(value))
-                    {
-                        property.SetValue(professor, Convert.ChangeType(value, property.PropertyType));
-                    }
-                }
+                    FullName = worksheet.Cells[row, 1].Value?.ToString(),
+                    Keywords = worksheet.Cells[row, 2].Value?.ToString(),
+                    Wos = worksheet.Cells[row, 3].Value?.ToString(),
+                    Web = worksheet.Cells[row, 4].Value?.ToString(),
+                    Email = worksheet.Cells[row, 5].Value?.ToString(),
+                    Text = worksheet.Cells[row, 6].Value?.ToString(),
+                    University = worksheet.Cells[row, 7].Value?.ToString(),
+                    Papers = Convert.ToInt32(worksheet.Cells[row, 8].Value ?? "0"),
+                    Related = Convert.ToBoolean(worksheet.Cells[row, 9].Value ?? "false"),
+                    Result = Enum.TryParse<ResultType>(worksheet.Cells[row, 10].Value?.ToString(), out var result) ? result : null,
+                    Country = Enum.TryParse<CountryCode>(worksheet.Cells[row, 11].Value?.ToString(), out var country) ? country : null,
+                    EmailDate = DateTime.TryParse(worksheet.Cells[row, 12].Value?.ToString(), out var emailDate) ? emailDate : DateTime.UtcNow,
+                    UpdateDate = DateTime.TryParse(worksheet.Cells[row, 13].Value?.ToString(), out var updateDate) ? updateDate : DateTime.UtcNow
+                };
 
                 importedProfessors.Add(professor);
             }
 
-            _context.Professors.AddRange(importedProfessors);
+            await _context.Professors.AddRangeAsync(importedProfessors);
             await _context.SaveChangesAsync();
 
             return Ok("File imported successfully.");
