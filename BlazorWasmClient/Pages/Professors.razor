@@ -73,7 +73,7 @@ else
     private string currentSortColumn = "";
     private bool ascending = true;
 
-    protected override async Task OnInitializedAsync()
+    protected override async Task OnParametersSetAsync()
     {
         userKey = await JS.InvokeAsync<string>("getCookie", "accessKey");
         professors = await ProfessorService.GetProfessorsByCountry(country);
