@@ -24,6 +24,10 @@
         {
             await ProfessorService.ImportProfessorsFromExcel(file);
         }
+        else 
+        {
+            Console.WriteLine("Import File is not valid");
+        }
     }
 
 }
