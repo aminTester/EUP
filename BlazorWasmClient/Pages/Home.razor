@@ -9,17 +9,14 @@
 <h1>Hello, world!</h1>
 
 <button @onclick="ExportProfessors">Export to Excel</button>
-<input type="file" @onchange="HandleFileSelected" accept=".xlsx" />
+<InputFile OnChange="HandleFileSelected" accept=".xlsx" />
 <button @onclick="ImportProfessors">Upload</button>
 @code {
     private IBrowserFile selectedFile;
     private List<Professor>? professors;
-    private void HandleFileSelected(ChangeEventArgs e)
+    private async Task HandleFileSelected(InputFileChangeEventArgs e)
     {
-        if (e.Value is not null)
-        {
-            selectedFile = ((IBrowserFile)e.Value);
-        }
+        selectedFile = e.File;
     }
     private async Task ExportProfessors()
     {

@@ -130,6 +130,8 @@ namespace BlazorWasmAPI.Controllers
 
             for (int row = 2; row <= rowCount; row++) // Skip header row
             {
+                if (worksheet.Cells[row, 1].Value == null) continue; // Skip empty rows
+
                 var professor = new Professor
                 {
                     FullName = worksheet.Cells[row, 1].Value?.ToString(),
@@ -139,8 +141,8 @@ namespace BlazorWasmAPI.Controllers
                     Email = worksheet.Cells[row, 5].Value?.ToString(),
                     Text = worksheet.Cells[row, 6].Value?.ToString(),
                     University = worksheet.Cells[row, 7].Value?.ToString(),
-                    Papers = Convert.ToInt32(worksheet.Cells[row, 8].Value ?? "0"),
-                    Related = Convert.ToBoolean(worksheet.Cells[row, 9].Value ?? "false"),
+                    Papers = int.TryParse(worksheet.Cells[row, 8].Value?.ToString(), out int papers) ? papers : 0,
+                    Related = bool.TryParse(worksheet.Cells[row, 9].Value?.ToString(), out bool related) ? related : false,
                     Result = Enum.TryParse<ResultType>(worksheet.Cells[row, 10].Value?.ToString(), out var result) ? result : null,
                     Country = Enum.TryParse<CountryCode>(worksheet.Cells[row, 11].Value?.ToString(), out var country) ? country : null,
                     EmailDate = DateTime.TryParse(worksheet.Cells[row, 12].Value?.ToString(), out var emailDate) ? emailDate : DateTime.UtcNow,
@@ -153,7 +155,7 @@ namespace BlazorWasmAPI.Controllers
             await _context.Professors.AddRangeAsync(importedProfessors);
             await _context.SaveChangesAsync();
 
-            return Ok("File imported successfully.");
+            return Ok(new { Message = "File imported successfully.", Count = importedProfessors.Count });
         }
 
 
