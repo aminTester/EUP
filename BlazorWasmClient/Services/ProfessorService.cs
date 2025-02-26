@@ -64,7 +64,25 @@ namespace BlazorWasmClient.Services
             var fileContent = new StreamContent(fileStream);
             content.Add(fileContent, "file", file.Name);
 
-            await _http.PostAsync("api/professors/import", content);
+            // Log or break here to make sure the file is sent correctly
+            try
+            {
+                var response = await _http.PostAsync("api/professors/import", content);
+                if (response.IsSuccessStatusCode)
+                {
+                    Console.WriteLine("IMPORT OK with this status code : " +response.StatusCode);
+                }
+                else
+                {
+                    Console.WriteLine("IMPORT Error with this status code : " + response.StatusCode);
+                }
+            }
+            catch (Exception ex)
+            {
+                // Handle exception or log
+                Console.WriteLine($"Error: {ex.Message}");
+            }
         }
+
     }
 }

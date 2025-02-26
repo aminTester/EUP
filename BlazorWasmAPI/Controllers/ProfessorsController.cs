@@ -115,33 +115,46 @@ namespace BlazorWasmAPI.Controllers
                 return BadRequest("No file uploaded.");
             }
 
-            using var stream = new MemoryStream();
-            await file.CopyToAsync(stream);
-            using var package = new ExcelPackage(stream);
-            var worksheet = package.Workbook.Worksheets[0];
-            var rowCount = worksheet.Dimension.Rows;
-            var properties = typeof(Professor).GetProperties();
+            // Logging for debugging
+            Console.WriteLine($"File Name: {file.FileName}, File Length: {file.Length}");
 
-            var importedProfessors = new List<Professor>();
-            for (int row = 2; row <= rowCount; row++) // Start from row 2 (skip headers)
+            try
             {
-                var professor = new Professor();
-                for (int col = 1; col <= properties.Length; col++)
+                using var stream = new MemoryStream();
+                await file.CopyToAsync(stream);
+                using var package = new ExcelPackage(stream);
+                var worksheet = package.Workbook.Worksheets[0];
+                var rowCount = worksheet.Dimension.Rows;
+                var properties = typeof(Professor).GetProperties();
+
+                var importedProfessors = new List<Professor>();
+                for (int row = 2; row <= rowCount; row++) // Start from row 2 (skip headers)
                 {
-                    var property = properties[col - 1];
-                    var value = worksheet.Cells[row, col].Value?.ToString();
-                    if (!string.IsNullOrEmpty(value))
+                    var professor = new Professor();
+                    for (int col = 1; col <= properties.Length; col++)
                     {
-                        property.SetValue(professor, Convert.ChangeType(value, property.PropertyType));
+                        var property = properties[col - 1];
+                        var value = worksheet.Cells[row, col].Value?.ToString();
+                        if (!string.IsNullOrEmpty(value))
+                        {
+                            property.SetValue(professor, Convert.ChangeType(value, property.PropertyType));
+                        }
                     }
+                    importedProfessors.Add(professor);
                 }
-                importedProfessors.Add(professor);
+
+                _context.Professors.AddRange(importedProfessors);
+                await _context.SaveChangesAsync();
+
+                return Ok("File imported successfully.");
             }
-
-            _context.Professors.AddRange(importedProfessors);
-            await _context.SaveChangesAsync();
-
-            return Ok("File imported successfully.");
+            catch (Exception ex)
+            {
+                // Log or return error
+                Console.WriteLine($"Error: {ex.Message}");
+                return StatusCode(500, "An error occurred while processing the file.");
+            }
         }
+
     }
 }
