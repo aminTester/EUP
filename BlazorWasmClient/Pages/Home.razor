@@ -20,13 +20,15 @@
 
     private async Task ImportProfessors(ChangeEventArgs e)
     {
-        if (e.Value is not null and IBrowserFile file)
+        var file = e.Value as IBrowserFile;
+        if (file != null)
         {
             await ProfessorService.ImportProfessorsFromExcel(file);
         }
-        else 
+        else
         {
-            Console.WriteLine("Import File is not valid");
+            // Handle the case where no file is selected
+            Console.WriteLine("No file selected or invalid file type.");
         }
     }
 
