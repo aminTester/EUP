@@ -63,6 +63,16 @@ namespace BlazorWasmClient.Services
 
         public async Task<string> ExportProfessorsToExcel()
         {
+            var userKey = await GetUserKey();
+            if (string.IsNullOrEmpty(userKey))
+            {
+                Console.WriteLine("No access key found!");
+                return "Not Authenticated";
+            }
+
+            _http.DefaultRequestHeaders.Remove("X-Access-Key");
+            _http.DefaultRequestHeaders.Add("X-Access-Key", userKey);
+
             var response = await _http.GetAsync("api/professors/export");
             if (response.IsSuccessStatusCode)
             {
@@ -79,6 +89,16 @@ namespace BlazorWasmClient.Services
 
         public async Task<bool> ImportProfessorsFromExcel(IBrowserFile file)
         {
+            var userKey = await GetUserKey();
+            if (string.IsNullOrEmpty(userKey))
+            {
+                Console.WriteLine("No access key found!");
+                return false;
+            }
+
+            _http.DefaultRequestHeaders.Remove("X-Access-Key");
+            _http.DefaultRequestHeaders.Add("X-Access-Key", userKey);
+
             if (file == null)
             {
                 Console.WriteLine("No file selected.");

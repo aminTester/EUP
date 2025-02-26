@@ -86,6 +86,12 @@ namespace BlazorWasmAPI.Controllers
         [HttpGet("export")]
         public async Task<IActionResult> ExportProfessorsToExcel()
         {
+            var requestKey = Request.Headers["X-Access-Key"].ToString();
+            if (string.IsNullOrWhiteSpace(requestKey) || requestKey != "EA6664")
+            {
+                return Unauthorized("Invalid access key.");
+            }
+
             var professors = await _context.Professors.ToListAsync();
 
             using var package = new ExcelPackage();
@@ -116,6 +122,13 @@ namespace BlazorWasmAPI.Controllers
         [HttpPost("import")]
         public async Task<IActionResult> ImportProfessorsFromExcel([FromForm] IFormFile file)
         {
+            var requestKey = Request.Headers["X-Access-Key"].ToString();
+            if (string.IsNullOrWhiteSpace(requestKey) || requestKey != "EA6664")
+            {
+                return Unauthorized("Invalid access key.");
+            }
+
+
             if (file == null || file.Length == 0)
             {
                 return BadRequest("No file selected or invalid file type.");
