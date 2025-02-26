@@ -35,7 +35,7 @@ namespace BlazorWasmClient.Services
                 professor.EmailDate = professor.EmailDate.ToUniversalTime(); // Convert to UTC
             }
 
-            var response = await _http.PutAsJsonAsync($"{_baseUrl}/api/professors/{professor.Id}", professor);
+            var response = await _http.PutAsJsonAsync($"{_baseUrl}api/professors/{professor.Id}", professor);
             if (!response.IsSuccessStatusCode)
             {
                 var errorMsg = await response.Content.ReadAsStringAsync();
