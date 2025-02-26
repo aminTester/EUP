@@ -33,8 +33,8 @@ builder.Services.AddCors(options =>
         {
             policy.WithOrigins(ClientBaseUrl)
                   .AllowAnyHeader()
-                  .AllowAnyMethod()
-                  .AllowCredentials();
+                  .AllowAnyMethod();
+                  //.AllowCredentials();
         });
 });
 
