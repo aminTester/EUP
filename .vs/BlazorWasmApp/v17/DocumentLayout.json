@@ -3,32 +3,12 @@
   "WorkspaceRootPath": "D:\\Works\\Blazor\\EUP\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{780C45E6-10EB-4D6D-916A-664DC5EAA29E}|BlazorWasmAPI\\BlazorWasmAPI.csproj|d:\\works\\blazor\\eup\\blazorwasmapi\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{780C45E6-10EB-4D6D-916A-664DC5EAA29E}|BlazorWasmAPI\\BlazorWasmAPI.csproj|solutionrelative:blazorwasmapi\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{1416DD41-D232-4014-982E-2E7DD34A4151}|BlazorWasmClient\\BlazorWasmClient.csproj|d:\\works\\blazor\\eup\\blazorwasmclient\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{1416DD41-D232-4014-982E-2E7DD34A4151}|BlazorWasmClient\\BlazorWasmClient.csproj|solutionrelative:blazorwasmclient\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{1416DD41-D232-4014-982E-2E7DD34A4151}|BlazorWasmClient\\BlazorWasmClient.csproj|d:\\works\\blazor\\eup\\blazorwasmclient\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
-      "RelativeMoniker": "D:0:0:{1416DD41-D232-4014-982E-2E7DD34A4151}|BlazorWasmClient\\BlazorWasmClient.csproj|solutionrelative:blazorwasmclient\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{1416DD41-D232-4014-982E-2E7DD34A4151}|BlazorWasmClient\\BlazorWasmClient.csproj|d:\\works\\blazor\\eup\\blazorwasmclient\\pages\\editprofessor.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{1416DD41-D232-4014-982E-2E7DD34A4151}|BlazorWasmClient\\BlazorWasmClient.csproj|solutionrelative:blazorwasmclient\\pages\\editprofessor.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{1416DD41-D232-4014-982E-2E7DD34A4151}|BlazorWasmClient\\BlazorWasmClient.csproj|d:\\works\\blazor\\eup\\blazorwasmclient\\services\\professorservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{1416DD41-D232-4014-982E-2E7DD34A4151}|BlazorWasmClient\\BlazorWasmClient.csproj|solutionrelative:blazorwasmclient\\services\\professorservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{780C45E6-10EB-4D6D-916A-664DC5EAA29E}|BlazorWasmAPI\\BlazorWasmAPI.csproj|d:\\works\\blazor\\eup\\blazorwasmapi\\controllers\\professorscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{780C45E6-10EB-4D6D-916A-664DC5EAA29E}|BlazorWasmAPI\\BlazorWasmAPI.csproj|solutionrelative:blazorwasmapi\\controllers\\professorscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{1416DD41-D232-4014-982E-2E7DD34A4151}|BlazorWasmClient\\BlazorWasmClient.csproj|d:\\works\\blazor\\eup\\blazorwasmclient\\pages\\professors.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{1416DD41-D232-4014-982E-2E7DD34A4151}|BlazorWasmClient\\BlazorWasmClient.csproj|solutionrelative:blazorwasmclient\\pages\\professors.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{B8A14A80-4BC5-4476-A50C-0BB36F2F82A7}|BlazorWasmShared\\BlazorWasmShared.csproj|d:\\works\\blazor\\eup\\blazorwasmshared\\professor.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B8A14A80-4BC5-4476-A50C-0BB36F2F82A7}|BlazorWasmShared\\BlazorWasmShared.csproj|solutionrelative:blazorwasmshared\\professor.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -51,92 +31,27 @@
             {
               "$type": "Document",
               "DocumentIndex": 1,
-              "Title": "appsettings.json",
-              "DocumentMoniker": "D:\\Works\\Blazor\\EUP\\BlazorWasmClient\\appsettings.json",
-              "RelativeDocumentMoniker": "BlazorWasmClient\\appsettings.json",
-              "ToolTip": "D:\\Works\\Blazor\\EUP\\BlazorWasmClient\\appsettings.json",
-              "RelativeToolTip": "BlazorWasmClient\\appsettings.json",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAEAAAAxAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2025-02-25T14:43:07.171Z",
+              "Title": "Program.cs",
+              "DocumentMoniker": "D:\\Works\\Blazor\\EUP\\BlazorWasmClient\\Program.cs",
+              "RelativeDocumentMoniker": "BlazorWasmClient\\Program.cs",
+              "ToolTip": "D:\\Works\\Blazor\\EUP\\BlazorWasmClient\\Program.cs",
+              "RelativeToolTip": "BlazorWasmClient\\Program.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABMAAAA7AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-26T07:55:03.238Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 0,
               "Title": "Program.cs",
-              "DocumentMoniker": "D:\\Works\\Blazor\\EUP\\BlazorWasmClient\\Program.cs",
-              "RelativeDocumentMoniker": "BlazorWasmClient\\Program.cs",
-              "ToolTip": "D:\\Works\\Blazor\\EUP\\BlazorWasmClient\\Program.cs*",
-              "RelativeToolTip": "BlazorWasmClient\\Program.cs*",
-              "ViewState": "AgIAAAYAAAAAAAAAAAAAABgAAAAMAAAAAAAAAA==",
+              "DocumentMoniker": "D:\\Works\\Blazor\\EUP\\BlazorWasmAPI\\Program.cs",
+              "RelativeDocumentMoniker": "BlazorWasmAPI\\Program.cs",
+              "ToolTip": "D:\\Works\\Blazor\\EUP\\BlazorWasmAPI\\Program.cs",
+              "RelativeToolTip": "BlazorWasmAPI\\Program.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABQAAABXAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-25T14:31:56.882Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "EditProfessor.razor",
-              "DocumentMoniker": "D:\\Works\\Blazor\\EUP\\BlazorWasmClient\\Pages\\EditProfessor.razor",
-              "RelativeDocumentMoniker": "BlazorWasmClient\\Pages\\EditProfessor.razor",
-              "ToolTip": "D:\\Works\\Blazor\\EUP\\BlazorWasmClient\\Pages\\EditProfessor.razor",
-              "RelativeToolTip": "BlazorWasmClient\\Pages\\EditProfessor.razor",
-              "ViewState": "AgIAAEsAAAAAAAAAAAAAAGQAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-02-25T13:51:10.73Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "ProfessorsController.cs",
-              "DocumentMoniker": "D:\\Works\\Blazor\\EUP\\BlazorWasmAPI\\Controllers\\ProfessorsController.cs",
-              "RelativeDocumentMoniker": "BlazorWasmAPI\\Controllers\\ProfessorsController.cs",
-              "ToolTip": "D:\\Works\\Blazor\\EUP\\BlazorWasmAPI\\Controllers\\ProfessorsController.cs",
-              "RelativeToolTip": "BlazorWasmAPI\\Controllers\\ProfessorsController.cs",
-              "ViewState": "AgIAABsAAAAAAAAAAAAowEgAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-25T13:28:20.038Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "ProfessorService.cs",
-              "DocumentMoniker": "D:\\Works\\Blazor\\EUP\\BlazorWasmClient\\Services\\ProfessorService.cs",
-              "RelativeDocumentMoniker": "BlazorWasmClient\\Services\\ProfessorService.cs",
-              "ToolTip": "D:\\Works\\Blazor\\EUP\\BlazorWasmClient\\Services\\ProfessorService.cs",
-              "RelativeToolTip": "BlazorWasmClient\\Services\\ProfessorService.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAACUAAABSAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-25T13:27:04.235Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "Professor.cs",
-              "DocumentMoniker": "D:\\Works\\Blazor\\EUP\\BlazorWasmShared\\Professor.cs",
-              "RelativeDocumentMoniker": "BlazorWasmShared\\Professor.cs",
-              "ToolTip": "D:\\Works\\Blazor\\EUP\\BlazorWasmShared\\Professor.cs",
-              "RelativeToolTip": "BlazorWasmShared\\Professor.cs",
-              "ViewState": "AgIAAA0AAAAAAAAAAAA0wBsAAAAJAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-25T13:14:58.553Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "Professors.razor",
-              "DocumentMoniker": "D:\\Works\\Blazor\\EUP\\BlazorWasmClient\\Pages\\Professors.razor",
-              "RelativeDocumentMoniker": "BlazorWasmClient\\Pages\\Professors.razor",
-              "ToolTip": "D:\\Works\\Blazor\\EUP\\BlazorWasmClient\\Pages\\Professors.razor",
-              "RelativeToolTip": "BlazorWasmClient\\Pages\\Professors.razor",
-              "ViewState": "AgIAABwAAAAAAAAAAAAuwC8AAAAsAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-02-25T13:10:46.252Z",
+              "WhenOpened": "2025-02-26T07:44:02.02Z",
               "EditorCaption": ""
             }
           ]

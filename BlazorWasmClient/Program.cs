@@ -14,22 +14,14 @@ public class Program
 
 
 
-        //builder.Services.AddOidcAuthentication(options =>
-        //{
-        //    // Configure your authentication provider options here.
-        //    // For more information, see https://aka.ms/blazor-standalone-auth
-        //    builder.Configuration.Bind("Local", options.ProviderOptions);
-        //});
-
-
         //my
-        //builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri("https://eup-server.onrender.com/") });
-        builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(sp.GetRequiredService<IConfiguration>()["ApiBaseUrl"]) });
+        //local ==  "https://localhost:7051/"
+        //render  =  "https://eup-server.onrender.com/"
+        var apiBaseUrl = "https://eup-server.onrender.com/";
+        builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(apiBaseUrl) });
         builder.Services.AddScoped<ProfessorService>(sp =>
         {
-            var config = sp.GetRequiredService<IConfiguration>();
-            var baseUrl = config["ApiBaseUrl"];
-            return new ProfessorService(sp.GetRequiredService<HttpClient>(), baseUrl);
+            return new ProfessorService(sp.GetRequiredService<HttpClient>(), apiBaseUrl);
         });
 
         await builder.Build().RunAsync();
