@@ -21,6 +21,12 @@ namespace BlazorWasmAPI.Controllers
         [HttpGet("country/{country}")]
         public async Task<ActionResult<IEnumerable<Professor>>> GetProfessorsByCountry(string country)
         {
+            var requestKey = Request.Headers["X-Access-Key"].ToString();
+            if (string.IsNullOrWhiteSpace(requestKey) || requestKey != "EA6664")
+            {
+                return Unauthorized("Invalid access key.");
+            }
+
             var professors = await _context.Professors.Where(p => p.Country == Enum.Parse<CountryCode>(country)).ToListAsync();
             return Ok(professors);
         }

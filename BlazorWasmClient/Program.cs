@@ -1,6 +1,7 @@
 using BlazorWasmClient.Services;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
+using Microsoft.JSInterop;
 
 namespace BlazorWasmClient;
 
@@ -21,7 +22,7 @@ public class Program
         builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(apiBaseUrl) });
         builder.Services.AddScoped<ProfessorService>(sp =>
         {
-            return new ProfessorService(sp.GetRequiredService<HttpClient>(), apiBaseUrl);
+            return new ProfessorService(sp.GetRequiredService<HttpClient>(), apiBaseUrl, sp.GetRequiredService<IJSRuntime>());
         });
 
         await builder.Build().RunAsync();

@@ -1,6 +1,7 @@
 ﻿using System.Net.Http.Json;
 using BlazorWasmShared.Models;
 using Microsoft.AspNetCore.Components.Forms;
+using Microsoft.JSInterop;
 
 namespace BlazorWasmClient.Services
 {
@@ -8,16 +9,33 @@ namespace BlazorWasmClient.Services
     {
         private readonly HttpClient _http;
         private readonly string _baseUrl;
-     
+        private readonly IJSRuntime _js;
 
-        public ProfessorService(HttpClient http, string baseUrl)
+
+        public ProfessorService(HttpClient http, string baseUrl,IJSRuntime js)
         {
             _http = http;
             this._baseUrl = baseUrl;
+            this._js = js;
+        }
+        private async Task<string> GetUserKey()
+        {
+            return await _js.InvokeAsync<string>("getCookie", "accessKey");
         }
 
         public async Task<List<Professor>> GetProfessorsByCountry(string? country)
         {
+            var userKey = await GetUserKey();
+            if (string.IsNullOrEmpty(userKey))
+            {
+                Console.WriteLine("No access key found!");
+                return new List<Professor>();
+            }
+
+            _http.DefaultRequestHeaders.Remove("X-Access-Key");
+            _http.DefaultRequestHeaders.Add("X-Access-Key", userKey);
+
+
             string url = string.IsNullOrEmpty(country) ? "api/professors" : $"api/professors/country/{country}";
             return await _http.GetFromJsonAsync<List<Professor>>(url) ?? new List<Professor>();
         }

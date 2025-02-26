@@ -3,55 +3,71 @@
 @using BlazorWasmShared.Models
 @using BlazorWasmShared.Enum
 @inject ProfessorService ProfessorService
+@inject NavigationManager Navigation
+@inject IJSRuntime JS
 
-
-<h3>Professors of @(country ?? "All Countries")</h3>
-
-
-@if (professors == null)
+@if (string.IsNullOrEmpty(userKey))
 {
-    <p>Loading...</p>
+    <input @bind="userKeyInput" placeholder="Enter access key" />
+    <button @onclick="SaveKey">Submit</button>
 }
 else
 {
-    <div class="container-fluid">
-        <table class="table table-hover table-striped">
-            <thead>
-                <tr>
-                    <th @onclick="() => SortBy(nameof(Professor.FullName))">Full Name</th>
-                    <th @onclick="() => SortBy(nameof(Professor.Keywords))">Keywords</th>
-                    <th @onclick="() => SortBy(nameof(Professor.Papers))">Papers</th>
-                    <th>WOS</th>
-                    <th>Web</th>
-                    <th @onclick="() => SortBy(nameof(Professor.University))">University</th>
-                    <th @onclick="() => SortBy(nameof(Professor.Related))">Related</th>
-                    <th @onclick="() => SortBy(nameof(Professor.EmailDate))">Email Date</th>
-                    <th @onclick="() => SortBy(nameof(Professor.UpdateDate))">Update Date</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var prof in professors)
-                {
-                    <tr class="@(GetRowClass(prof.Result))">
-                        <td>
-                            <a href="edit-professor/@prof.Id">@prof.FullName</a>
-                        </td>
-                        <td>@prof.Keywords</td>
-                        <td>@prof.Papers</td>
-                        <td><a href="@prof.Wos" target="_blank">WOS</a></td>
-                        <td><a href="@prof.Web" target="_blank">Website</a></td>
-                        <td>@prof.University</td>
-                        <td><input type="checkbox" checked="@prof.Related" disabled /></td>
-                        <td>@prof.EmailDate.ToShortDateString()</td>
-                        <td>@prof.UpdateDate.ToString("g")</td>
+    <button @onclick="Logout">Logout</button>
+
+    <h3>Professors of @(country ?? "All Countries")</h3>
+
+
+    @if (professors == null)
+    {
+        <p>Loading...</p>
+    }
+    else
+    {
+        <div class="container-fluid">
+            <table class="table table-hover table-striped">
+                <thead>
+                    <tr>
+                        <th @onclick="() => SortBy(nameof(Professor.FullName))">Full Name</th>
+                        <th @onclick="() => SortBy(nameof(Professor.Keywords))">Keywords</th>
+                        <th @onclick="() => SortBy(nameof(Professor.Papers))">Papers</th>
+                        <th>WOS</th>
+                        <th>Web</th>
+                        <th @onclick="() => SortBy(nameof(Professor.University))">University</th>
+                        <th @onclick="() => SortBy(nameof(Professor.Related))">Related</th>
+                        <th @onclick="() => SortBy(nameof(Professor.EmailDate))">Email Date</th>
+                        <th @onclick="() => SortBy(nameof(Professor.UpdateDate))">Update Date</th>
                     </tr>
-                }
-            </tbody>
-        </table>
-    </div>
+                </thead>
+                <tbody>
+                    @foreach (var prof in professors)
+                    {
+                        <tr class="@(GetRowClass(prof.Result))">
+                            <td>
+                                <a href="edit-professor/@prof.Id">@prof.FullName</a>
+                            </td>
+                            <td>@prof.Keywords</td>
+                            <td>@prof.Papers</td>
+                            <td><a href="@prof.Wos" target="_blank">WOS</a></td>
+                            <td><a href="@prof.Web" target="_blank">Website</a></td>
+                            <td>@prof.University</td>
+                            <td><input type="checkbox" checked="@prof.Related" disabled /></td>
+                            <td>@prof.EmailDate.ToShortDateString()</td>
+                            <td>@prof.UpdateDate.ToString("g")</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
 }
 
+
+
 @code {
+     private string userKey;
+    private string userKeyInput;
+
     private List<Professor>? professors;
     [Parameter] public string? country { get; set; }
     private string currentSortColumn = "";
@@ -59,7 +75,25 @@ else
 
     protected override async Task OnInitializedAsync()
     {
+        userKey = await JS.InvokeAsync<string>("getCookie", "accessKey");
         professors = await ProfessorService.GetProfessorsByCountry(country);
+
+    }
+    private async Task SaveKey()
+    {
+        if (string.IsNullOrWhiteSpace(userKeyInput))
+            return;
+
+        await JS.InvokeVoidAsync("setCookie", "accessKey", userKeyInput, 365); // Store for 1 year
+        userKey = userKeyInput;
+        StateHasChanged();
+    }
+
+    private async Task Logout()
+    {
+        await JS.InvokeVoidAsync("deleteCookie", "accessKey");
+        userKey = null;
+        StateHasChanged();
     }
 
     private string GetRowClass(ResultType? result)

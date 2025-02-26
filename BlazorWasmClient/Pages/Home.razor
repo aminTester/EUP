@@ -3,17 +3,54 @@
 @using BlazorWasmShared.Models
 @inject ProfessorService ProfessorService
 @inject NavigationManager Navigation
+@inject IJSRuntime JS
 
 <PageTitle>Home</PageTitle>
 
 <h1>Hello, world!</h1>
 
-<button @onclick="ExportProfessors">Export to Excel</button>
-<InputFile OnChange="HandleFileSelected" accept=".xlsx" />
-<button @onclick="ImportProfessors">Upload</button>
+@if (string.IsNullOrEmpty(userKey))
+{
+    <input @bind="userKeyInput" placeholder="Enter access key" />
+    <button @onclick="SaveKey">Submit</button>
+}
+else
+{
+    <button @onclick="Logout">Logout</button>
+    <button @onclick="ExportProfessors">Export to Excel</button>
+    <InputFile OnChange="HandleFileSelected" accept=".xlsx" />
+    <button @onclick="ImportProfessors">Upload</button>
+
+}
+
 @code {
+    private string userKey;
+    private string userKeyInput;
+
     private IBrowserFile selectedFile;
     private List<Professor>? professors;
+
+    protected override async Task OnInitializedAsync()
+    {
+        userKey = await JS.InvokeAsync<string>("getCookie", "accessKey");
+    }
+    private async Task SaveKey()
+    {
+        if (string.IsNullOrWhiteSpace(userKeyInput))
+            return;
+
+        await JS.InvokeVoidAsync("setCookie", "accessKey", userKeyInput, 365); // Store for 1 year
+        userKey = userKeyInput;
+        StateHasChanged();
+    }
+
+    private async Task Logout()
+    {
+        await JS.InvokeVoidAsync("deleteCookie", "accessKey");
+        userKey = null;
+        StateHasChanged();
+    }
+
     private async Task HandleFileSelected(InputFileChangeEventArgs e)
     {
         selectedFile = e.File;
