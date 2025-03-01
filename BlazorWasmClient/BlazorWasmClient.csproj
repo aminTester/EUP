@@ -6,6 +6,8 @@
 	<StaticWebAssetBasePath>EUP</StaticWebAssetBasePath>
 	  <Nullable>enable</Nullable>
 	  <NullabilityInfoContextSupport>true</NullabilityInfoContextSupport>
+	  <WasmEnableExceptionHandling>false</WasmEnableExceptionHandling>
+	  <WasmEnableSIMD>false</WasmEnableSIMD>
   </PropertyGroup>
 
   <ItemGroup>
