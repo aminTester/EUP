@@ -3,16 +3,8 @@
   "WorkspaceRootPath": "D:\\Works\\Blazor\\EUP\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{B8A14A80-4BC5-4476-A50C-0BB36F2F82A7}|BlazorWasmShared\\BlazorWasmShared.csproj|d:\\works\\blazor\\eup\\blazorwasmshared\\sortingextensions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B8A14A80-4BC5-4476-A50C-0BB36F2F82A7}|BlazorWasmShared\\BlazorWasmShared.csproj|solutionrelative:blazorwasmshared\\sortingextensions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{1416DD41-D232-4014-982E-2E7DD34A4151}|BlazorWasmClient\\BlazorWasmClient.csproj|d:\\works\\blazor\\eup\\blazorwasmclient\\pages\\professors.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
       "RelativeMoniker": "D:0:0:{1416DD41-D232-4014-982E-2E7DD34A4151}|BlazorWasmClient\\BlazorWasmClient.csproj|solutionrelative:blazorwasmclient\\pages\\professors.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{B8A14A80-4BC5-4476-A50C-0BB36F2F82A7}|BlazorWasmShared\\BlazorWasmShared.csproj|d:\\works\\blazor\\eup\\blazorwasmshared\\sortablecolumn.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B8A14A80-4BC5-4476-A50C-0BB36F2F82A7}|BlazorWasmShared\\BlazorWasmShared.csproj|solutionrelative:blazorwasmshared\\sortablecolumn.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{B8A14A80-4BC5-4476-A50C-0BB36F2F82A7}|BlazorWasmShared\\BlazorWasmShared.csproj|d:\\works\\blazor\\eup\\blazorwasmshared\\enum\\countrycode.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -43,45 +35,19 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "SortingExtensions.cs",
-              "DocumentMoniker": "D:\\Works\\Blazor\\EUP\\BlazorWasmShared\\SortingExtensions.cs",
-              "RelativeDocumentMoniker": "BlazorWasmShared\\SortingExtensions.cs",
-              "ToolTip": "D:\\Works\\Blazor\\EUP\\BlazorWasmShared\\SortingExtensions.cs*",
-              "RelativeToolTip": "BlazorWasmShared\\SortingExtensions.cs*",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAqwB4AAABAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-01T13:13:58.204Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "SortableColumn.cs",
-              "DocumentMoniker": "D:\\Works\\Blazor\\EUP\\BlazorWasmShared\\SortableColumn.cs",
-              "RelativeDocumentMoniker": "BlazorWasmShared\\SortableColumn.cs",
-              "ToolTip": "D:\\Works\\Blazor\\EUP\\BlazorWasmShared\\SortableColumn.cs",
-              "RelativeToolTip": "BlazorWasmShared\\SortableColumn.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-01T13:13:48.878Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
               "Title": "Professors.razor",
               "DocumentMoniker": "D:\\Works\\Blazor\\EUP\\BlazorWasmClient\\Pages\\Professors.razor",
               "RelativeDocumentMoniker": "BlazorWasmClient\\Pages\\Professors.razor",
               "ToolTip": "D:\\Works\\Blazor\\EUP\\BlazorWasmClient\\Pages\\Professors.razor",
               "RelativeToolTip": "BlazorWasmClient\\Pages\\Professors.razor",
-              "ViewState": "AgIAAGgAAAAAAAAAAAAtwIcAAAAUAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABIAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
               "WhenOpened": "2025-03-01T12:51:42.823Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 1,
               "Title": "CountryCode.cs",
               "DocumentMoniker": "D:\\Works\\Blazor\\EUP\\BlazorWasmShared\\Enum\\CountryCode.cs",
               "RelativeDocumentMoniker": "BlazorWasmShared\\Enum\\CountryCode.cs",
@@ -110,7 +76,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 2,
               "Title": "ResultType.cs",
               "DocumentMoniker": "D:\\Works\\Blazor\\EUP\\BlazorWasmShared\\Enum\\ResultType.cs",
               "RelativeDocumentMoniker": "BlazorWasmShared\\Enum\\ResultType.cs",
@@ -123,7 +89,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 3,
               "Title": "Professor.cs",
               "DocumentMoniker": "D:\\Works\\Blazor\\EUP\\BlazorWasmShared\\Professor.cs",
               "RelativeDocumentMoniker": "BlazorWasmShared\\Professor.cs",
@@ -136,7 +102,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 4,
               "Title": "BlazorWasmClient",
               "DocumentMoniker": "D:\\Works\\Blazor\\EUP\\BlazorWasmClient\\BlazorWasmClient.csproj",
               "RelativeDocumentMoniker": "BlazorWasmClient\\BlazorWasmClient.csproj",

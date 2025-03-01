@@ -110,7 +110,7 @@ else
     private List<Professor>? professors;
     [Parameter] public string? country { get; set; }
 
-    private List<(string Column, bool Ascending)> sortCriteria = new List<(string, bool)>();
+    private List<(string Column, bool Ascending, int ClickCount)> sortCriteria = new List<(string, bool, int)>();
 
     protected override async Task OnParametersSetAsync()
     {
@@ -153,14 +153,22 @@ else
 
         if (existing.Column != null)
         {
-            // If the column is already in the sort criteria, toggle its sorting direction.
-            sortCriteria.Remove(existing);
-            sortCriteria.Add((column, !existing.Ascending));
+            if (existing.ClickCount == 2)
+            {
+                // Third click: Remove the sorting order for this column
+                sortCriteria.Remove(existing);
+            }
+            else
+            {
+                // Toggle sorting direction
+                sortCriteria.Remove(existing);
+                sortCriteria.Add((column, !existing.Ascending, existing.ClickCount + 1));
+            }
         }
         else
         {
-            // If the column is not in the sort criteria, add it with ascending direction.
-            sortCriteria.Add((column, true));
+            // First click: Add with ascending direction
+            sortCriteria.Add((column, true, 1));
         }
 
         ApplySorting();
@@ -171,7 +179,7 @@ else
         // Apply sorting based on the stored criteria (order matters here)
         IOrderedEnumerable<Professor> sortedProfessors = professors.OrderBy(p => 0);  // Default order (no sorting)
 
-        foreach (var (column, ascending) in sortCriteria)
+        foreach (var (column, ascending, _) in sortCriteria)
         {
             sortedProfessors = ascending
                 ? sortedProfessors.ThenBy(p => GetPropertyValue(p, column))
