@@ -1,6 +1,5 @@
 ﻿@page "/professors/{country?}"
 @using BlazorWasmClient.Services
-@using BlazorWasmShared
 @using BlazorWasmShared.Models
 @using BlazorWasmShared.Enum
 @inject ProfessorService ProfessorService
@@ -28,20 +27,61 @@ else
             <table class="table table-hover table-striped">
                 <thead>
                     <tr>
-                        @foreach (var column in sortableColumns)
-                        {
-                            <th @onclick="() => SortBy(column)">
-                                @column.DisplayName
-                                @if (column.SortOrder != null)
-                                {
-                                    <span>@(column.SortOrder == SortDirection.Ascending ? "▲" : "▼")</span>
-                                }
-                            </th>
-                        }
+                        <th @onclick="() => AddSortCriteria(nameof(Professor.FullName))" style="cursor: pointer;">
+                            Full Name
+                            @if (IsSorted(nameof(Professor.FullName)))
+                            {
+                                <span>@(GetSortIcon(nameof(Professor.FullName)))</span>
+                            }
+                        </th>
+                        <th @onclick="() => AddSortCriteria(nameof(Professor.Keywords))" style="cursor: pointer;">
+                            Keywords
+                            @if (IsSorted(nameof(Professor.Keywords)))
+                            {
+                                <span>@(GetSortIcon(nameof(Professor.Keywords)))</span>
+                            }
+                        </th>
+                        <th @onclick="() => AddSortCriteria(nameof(Professor.Papers))" style="cursor: pointer;">
+                            Papers
+                            @if (IsSorted(nameof(Professor.Papers)))
+                            {
+                                <span>@(GetSortIcon(nameof(Professor.Papers)))</span>
+                            }
+                        </th>
+                        <th>WOS</th>
+                        <th>Web</th>
+                        <th @onclick="() => AddSortCriteria(nameof(Professor.University))" style="cursor: pointer;">
+                            University
+                            @if (IsSorted(nameof(Professor.University)))
+                            {
+                                <span>@(GetSortIcon(nameof(Professor.University)))</span>
+                            }
+                        </th>
+                        <th @onclick="() => AddSortCriteria(nameof(Professor.Related))" style="cursor: pointer;">
+                            Related
+                            @if (IsSorted(nameof(Professor.Related)))
+                            {
+                                <span>@(GetSortIcon(nameof(Professor.Related)))</span>
+                            }
+                        </th>
+                        <th @onclick="() => AddSortCriteria(nameof(Professor.EmailDate))" style="cursor: pointer;">
+                            Email Date
+                            @if (IsSorted(nameof(Professor.EmailDate)))
+                            {
+                                <span>@(GetSortIcon(nameof(Professor.EmailDate)))</span>
+                            }
+                        </th>
+                        <th @onclick="() => AddSortCriteria(nameof(Professor.UpdateDate))" style="cursor: pointer;">
+                            Update Date
+                            @if (IsSorted(nameof(Professor.UpdateDate)))
+                            {
+                                <span>@(GetSortIcon(nameof(Professor.UpdateDate)))</span>
+                            }
+                        </th>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach (var prof in FilteredAndSortedProfessors)
+                    @foreach (var prof in professors)
                     {
                         <tr class="@(GetRowClass(prof.Result))">
                             <td>
@@ -66,19 +106,11 @@ else
 @code {
     private string userKey;
     private string userKeyInput;
+
     private List<Professor>? professors;
     [Parameter] public string? country { get; set; }
 
-    private List<SortableColumn> sortableColumns = new()
-    {
-        new SortableColumn(nameof(Professor.FullName)),
-        new SortableColumn(nameof(Professor.Keywords)),
-        new SortableColumn(nameof(Professor.Papers)),
-        new SortableColumn(nameof(Professor.University)),
-        new SortableColumn(nameof(Professor.Related)),
-        new SortableColumn(nameof(Professor.EmailDate)),
-        new SortableColumn(nameof(Professor.UpdateDate))
-    };
+    private List<(string Column, bool Ascending)> sortCriteria = new List<(string, bool)>();
 
     protected override async Task OnParametersSetAsync()
     {
@@ -91,7 +123,7 @@ else
         if (string.IsNullOrWhiteSpace(userKeyInput))
             return;
 
-        await JS.InvokeVoidAsync("setCookie", "accessKey", userKeyInput, 365);
+        await JS.InvokeVoidAsync("setCookie", "accessKey", userKeyInput, 365); // Store for 1 year
         userKey = userKeyInput;
         StateHasChanged();
     }
@@ -115,25 +147,54 @@ else
         };
     }
 
-    private void SortBy(SortableColumn column)
+    private void AddSortCriteria(string column)
     {
-        if (column.SortOrder == null)
+        var existing = sortCriteria.FirstOrDefault(s => s.Column == column);
+
+        if (existing.Column != null)
         {
-            column.SortOrder = SortDirection.Ascending;
-        }
-        else if (column.SortOrder == SortDirection.Ascending)
-        {
-            column.SortOrder = SortDirection.Descending;
+            // If the column is already in the sort criteria, toggle its sorting direction.
+            sortCriteria.Remove(existing);
+            sortCriteria.Add((column, !existing.Ascending));
         }
         else
         {
-            column.SortOrder = null;
+            // If the column is not in the sort criteria, add it with ascending direction.
+            sortCriteria.Add((column, true));
         }
+
+        ApplySorting();
     }
 
-    private IEnumerable<Professor> FilteredAndSortedProfessors => professors
-        .Where(p => string.IsNullOrWhiteSpace(userKey) || p.FullName.Contains(userKey, StringComparison.OrdinalIgnoreCase))
-        .OrderByMultiple(sortableColumns.Where(c => c.SortOrder != null).ToList());
+    private void ApplySorting()
+    {
+        // Apply sorting based on the stored criteria (order matters here)
+        IOrderedEnumerable<Professor> sortedProfessors = professors.OrderBy(p => 0);  // Default order (no sorting)
+
+        foreach (var (column, ascending) in sortCriteria)
+        {
+            sortedProfessors = ascending
+                ? sortedProfessors.ThenBy(p => GetPropertyValue(p, column))
+                : sortedProfessors.ThenByDescending(p => GetPropertyValue(p, column));
+        }
+
+        professors = sortedProfessors.ToList();
+        StateHasChanged();
+    }
+
+    private object? GetPropertyValue(Professor prof, string propertyName)
+    {
+        return typeof(Professor).GetProperty(propertyName)?.GetValue(prof);
+    }
+
+    private bool IsSorted(string column)
+    {
+        return sortCriteria.Any(s => s.Column == column);
+    }
+
+    private string GetSortIcon(string column)
+    {
+        var sortDirection = sortCriteria.FirstOrDefault(s => s.Column == column).Ascending;
+        return sortDirection ? "↑" : "↓";
+    }
 }
-
-
