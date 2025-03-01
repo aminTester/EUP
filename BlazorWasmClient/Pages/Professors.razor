@@ -1,5 +1,6 @@
 ﻿@page "/professors/{country?}"
 @using BlazorWasmClient.Services
+@using BlazorWasmShared
 @using BlazorWasmShared.Models
 @using BlazorWasmShared.Enum
 @inject ProfessorService ProfessorService
@@ -17,7 +18,6 @@ else
 
     <h3>Professors of @(country ?? "All Countries")</h3>
 
-
     @if (professors == null)
     {
         <p>Loading...</p>
@@ -28,19 +28,20 @@ else
             <table class="table table-hover table-striped">
                 <thead>
                     <tr>
-                        <th @onclick="() => SortBy(nameof(Professor.FullName))">Full Name</th>
-                        <th @onclick="() => SortBy(nameof(Professor.Keywords))">Keywords</th>
-                        <th @onclick="() => SortBy(nameof(Professor.Papers))">Papers</th>
-                        <th>WOS</th>
-                        <th>Web</th>
-                        <th @onclick="() => SortBy(nameof(Professor.University))">University</th>
-                        <th @onclick="() => SortBy(nameof(Professor.Related))">Related</th>
-                        <th @onclick="() => SortBy(nameof(Professor.EmailDate))">Email Date</th>
-                        <th @onclick="() => SortBy(nameof(Professor.UpdateDate))">Update Date</th>
+                        @foreach (var column in sortableColumns)
+                        {
+                            <th @onclick="() => SortBy(column)">
+                                @column.DisplayName
+                                @if (column.SortOrder != null)
+                                {
+                                    <span>@(column.SortOrder == SortDirection.Ascending ? "▲" : "▼")</span>
+                                }
+                            </th>
+                        }
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach (var prof in professors)
+                    @foreach (var prof in FilteredAndSortedProfessors)
                     {
                         <tr class="@(GetRowClass(prof.Result))">
                             <td>
@@ -62,29 +63,35 @@ else
     }
 }
 
-
-
 @code {
-     private string userKey;
+    private string userKey;
     private string userKeyInput;
-
     private List<Professor>? professors;
     [Parameter] public string? country { get; set; }
-    private string currentSortColumn = "";
-    private bool ascending = true;
+
+    private List<SortableColumn> sortableColumns = new()
+    {
+        new SortableColumn(nameof(Professor.FullName)),
+        new SortableColumn(nameof(Professor.Keywords)),
+        new SortableColumn(nameof(Professor.Papers)),
+        new SortableColumn(nameof(Professor.University)),
+        new SortableColumn(nameof(Professor.Related)),
+        new SortableColumn(nameof(Professor.EmailDate)),
+        new SortableColumn(nameof(Professor.UpdateDate))
+    };
 
     protected override async Task OnParametersSetAsync()
     {
         userKey = await JS.InvokeAsync<string>("getCookie", "accessKey");
         professors = await ProfessorService.GetProfessorsByCountry(country);
-
     }
+
     private async Task SaveKey()
     {
         if (string.IsNullOrWhiteSpace(userKeyInput))
             return;
 
-        await JS.InvokeVoidAsync("setCookie", "accessKey", userKeyInput, 365); // Store for 1 year
+        await JS.InvokeVoidAsync("setCookie", "accessKey", userKeyInput, 365);
         userKey = userKeyInput;
         StateHasChanged();
     }
@@ -108,27 +115,25 @@ else
         };
     }
 
-    private void SortBy(string column)
+    private void SortBy(SortableColumn column)
     {
-        if (currentSortColumn == column)
+        if (column.SortOrder == null)
         {
-            ascending = !ascending;
+            column.SortOrder = SortDirection.Ascending;
+        }
+        else if (column.SortOrder == SortDirection.Ascending)
+        {
+            column.SortOrder = SortDirection.Descending;
         }
         else
         {
-            currentSortColumn = column;
-            ascending = true;
+            column.SortOrder = null;
         }
-
-        professors = ascending
-            ? professors.OrderBy(p => GetPropertyValue(p, column)).ToList()
-            : professors.OrderByDescending(p => GetPropertyValue(p, column)).ToList();
     }
 
-    private object? GetPropertyValue(Professor prof, string propertyName)
-    {
-        return typeof(Professor).GetProperty(propertyName)?.GetValue(prof);
-    }
-
-   
+    private IEnumerable<Professor> FilteredAndSortedProfessors => professors
+        .Where(p => string.IsNullOrWhiteSpace(userKey) || p.FullName.Contains(userKey, StringComparison.OrdinalIgnoreCase))
+        .OrderByMultiple(sortableColumns.Where(c => c.SortOrder != null).ToList());
 }
+
+

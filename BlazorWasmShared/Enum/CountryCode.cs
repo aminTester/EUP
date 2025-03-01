@@ -11,6 +11,7 @@
         Norway = 7,
         Scotland = 8,
         Sweden = 9,
-        Switzerland = 10
+        Switzerland = 10,
+        others=11
     }
 }
