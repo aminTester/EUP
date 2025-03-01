@@ -25,6 +25,11 @@ namespace BlazorWasmShared
                         : orderedQuery.ThenByDescending(x => GetPropertyValue(x, column.PropertyName));
                 }
             }
+            Console.WriteLine($"Sorting by: {string.Join(", ", columns.Select(c => c.PropertyName))}");
+            foreach (var prof in source)
+            {
+                Console.WriteLine($"Professor: {prof.ToString()}");
+            }
             return orderedQuery ?? source;
         }
 

@@ -3,6 +3,22 @@
   "WorkspaceRootPath": "D:\\Works\\Blazor\\EUP\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{1416DD41-D232-4014-982E-2E7DD34A4151}|BlazorWasmClient\\BlazorWasmClient.csproj|d:\\works\\blazor\\eup\\blazorwasmclient\\pages\\professors.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{1416DD41-D232-4014-982E-2E7DD34A4151}|BlazorWasmClient\\BlazorWasmClient.csproj|solutionrelative:blazorwasmclient\\pages\\professors.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B8A14A80-4BC5-4476-A50C-0BB36F2F82A7}|BlazorWasmShared\\BlazorWasmShared.csproj|d:\\works\\blazor\\eup\\blazorwasmshared\\enum\\countrycode.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B8A14A80-4BC5-4476-A50C-0BB36F2F82A7}|BlazorWasmShared\\BlazorWasmShared.csproj|solutionrelative:blazorwasmshared\\enum\\countrycode.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B8A14A80-4BC5-4476-A50C-0BB36F2F82A7}|BlazorWasmShared\\BlazorWasmShared.csproj|d:\\works\\blazor\\eup\\blazorwasmshared\\enum\\resulttype.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B8A14A80-4BC5-4476-A50C-0BB36F2F82A7}|BlazorWasmShared\\BlazorWasmShared.csproj|solutionrelative:blazorwasmshared\\enum\\resulttype.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B8A14A80-4BC5-4476-A50C-0BB36F2F82A7}|BlazorWasmShared\\BlazorWasmShared.csproj|d:\\works\\blazor\\eup\\blazorwasmshared\\professor.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B8A14A80-4BC5-4476-A50C-0BB36F2F82A7}|BlazorWasmShared\\BlazorWasmShared.csproj|solutionrelative:blazorwasmshared\\professor.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{1416DD41-D232-4014-982E-2E7DD34A4151}|BlazorWasmClient\\BlazorWasmClient.csproj|d:\\works\\blazor\\eup\\blazorwasmclient\\blazorwasmclient.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
       "RelativeMoniker": "D:0:0:{1416DD41-D232-4014-982E-2E7DD34A4151}|BlazorWasmClient\\BlazorWasmClient.csproj|solutionrelative:blazorwasmclient\\blazorwasmclient.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
     }
@@ -14,8 +30,34 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 4,
+          "SelectedChildIndex": 0,
           "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Professors.razor",
+              "DocumentMoniker": "D:\\Works\\Blazor\\EUP\\BlazorWasmClient\\Pages\\Professors.razor",
+              "RelativeDocumentMoniker": "BlazorWasmClient\\Pages\\Professors.razor",
+              "ToolTip": "D:\\Works\\Blazor\\EUP\\BlazorWasmClient\\Pages\\Professors.razor*",
+              "RelativeToolTip": "BlazorWasmClient\\Pages\\Professors.razor*",
+              "ViewState": "AgIAABUAAAAAAAAAAAAAACQAAABCAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-03-01T12:51:42.823Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "CountryCode.cs",
+              "DocumentMoniker": "D:\\Works\\Blazor\\EUP\\BlazorWasmShared\\Enum\\CountryCode.cs",
+              "RelativeDocumentMoniker": "BlazorWasmShared\\Enum\\CountryCode.cs",
+              "ToolTip": "D:\\Works\\Blazor\\EUP\\BlazorWasmShared\\Enum\\CountryCode.cs",
+              "RelativeToolTip": "BlazorWasmShared\\Enum\\CountryCode.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAARAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-01T10:43:21.806Z",
+              "EditorCaption": ""
+            },
             {
               "$type": "Bookmark",
               "Name": "ST:129:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
@@ -34,13 +76,39 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 2,
+              "Title": "ResultType.cs",
+              "DocumentMoniker": "D:\\Works\\Blazor\\EUP\\BlazorWasmShared\\Enum\\ResultType.cs",
+              "RelativeDocumentMoniker": "BlazorWasmShared\\Enum\\ResultType.cs",
+              "ToolTip": "D:\\Works\\Blazor\\EUP\\BlazorWasmShared\\Enum\\ResultType.cs",
+              "RelativeToolTip": "BlazorWasmShared\\Enum\\ResultType.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-01T12:14:32.819Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "Professor.cs",
+              "DocumentMoniker": "D:\\Works\\Blazor\\EUP\\BlazorWasmShared\\Professor.cs",
+              "RelativeDocumentMoniker": "BlazorWasmShared\\Professor.cs",
+              "ToolTip": "D:\\Works\\Blazor\\EUP\\BlazorWasmShared\\Professor.cs",
+              "RelativeToolTip": "BlazorWasmShared\\Professor.cs",
+              "ViewState": "AgIAAAYAAAAAAAAAAAAAABQAAAAUAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-01T10:43:10.112Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
               "Title": "BlazorWasmClient",
               "DocumentMoniker": "D:\\Works\\Blazor\\EUP\\BlazorWasmClient\\BlazorWasmClient.csproj",
               "RelativeDocumentMoniker": "BlazorWasmClient\\BlazorWasmClient.csproj",
               "ToolTip": "D:\\Works\\Blazor\\EUP\\BlazorWasmClient\\BlazorWasmClient.csproj",
               "RelativeToolTip": "BlazorWasmClient\\BlazorWasmClient.csproj",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAANAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
               "WhenOpened": "2025-03-01T06:39:15.877Z",
               "EditorCaption": ""
