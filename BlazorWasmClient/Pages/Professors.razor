@@ -34,7 +34,7 @@ else
                                 <span>@(GetSortIcon(nameof(Professor.FullName)))</span>
                             }
                         </th>
-                        <th @onclick="() => AddSortCriteria(nameof(Professor.Keywords))" style="cursor: pointer;">
+                        <th @onclick="() => AddSortCriteria(nameof(Professor.Keywords))" style="cursor: pointer; ">
                             Keywords
                             @if (IsSorted(nameof(Professor.Keywords)))
                             {
@@ -62,6 +62,13 @@ else
                             @if (IsSorted(nameof(Professor.Related)))
                             {
                                 <span>@(GetSortIcon(nameof(Professor.Related)))</span>
+                            }
+                        </th>
+                        <th @onclick="() => AddSortCriteria(nameof(Professor.Result))" style="cursor: pointer;">
+                            Result
+                            @if (IsSorted(nameof(Professor.Result)))
+                            {
+                                <span>@(GetSortIcon(nameof(Professor.Result)))</span>
                             }
                         </th>
                         <th @onclick="() => AddSortCriteria(nameof(Professor.EmailDate))" style="cursor: pointer;">
@@ -93,6 +100,7 @@ else
                             <td><a href="@prof.Web" target="_blank">Website</a></td>
                             <td>@prof.University</td>
                             <td><input type="checkbox" checked="@prof.Related" disabled /></td>
+                            <td>@prof.Result</td>
                             <td>@prof.EmailDate.ToShortDateString()</td>
                             <td>@prof.UpdateDate.ToString("g")</td>
                         </tr>
