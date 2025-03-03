@@ -2,6 +2,7 @@
 @using BlazorWasmClient.Services
 @using BlazorWasmShared.Models
 @using BlazorWasmShared.Enum
+@inject HttpClient Http
 @inject ProfessorService ProfessorService
 @inject NavigationManager Navigation
 @inject IJSRuntime JS
@@ -49,13 +50,19 @@ else
             <label>Email</label>
             @if (!string.IsNullOrEmpty(professor.Email))
             {
-                <a href="mailto:@professor.Email?subject=Apply for PhD">@professor.Email</a>
+                <a href="mailto:@professor.Email?subject=@emailSubject">@professor.Email</a>
             }
+        </div>
+        <!-- Links for loading text -->
+        <div>
+            <a href="#" @onclick="ClearText">Clear</a> |
+            <a href="#" @onclick="LoadText1">Take Text1</a> |
+            <a href="#" @onclick="LoadText2">Take Text2</a>
         </div>
 
         <div class="form-group">
             <label>Text</label>
-            <textarea class="form-control" @bind="@professor.Text"></textarea>
+            <textarea class="form-control" style="height: 250px;" @bind="@professor.Text"></textarea>
         </div>
 
         <div class="form-group">
@@ -86,10 +93,22 @@ else
 @code {
     [Parameter] public int id { get; set; }
     private Professor? professor;
+    private string emailText1 = "";
+    private string emailText2 = "";
+    private string emailSubject = "";
 
     protected override async Task OnInitializedAsync()
     {
         professor = await ProfessorService.GetProfessorById(id);
+
+        // Load email texts from JSON
+        var emailData = await Http.GetFromJsonAsync<EmailTexts>("emailTexts.json");
+        if (emailData != null)
+        {
+            emailText1 = emailData.Text1;
+            emailText2 = emailData.Text2;
+            emailSubject = emailData.Subject;
+        }
     }
 
     private async Task SaveChanges()
@@ -102,5 +121,27 @@ else
     private void GoBack()
     {
         Navigation.NavigateTo($"professors/{professor?.Country}");
+    }
+
+    private void ClearText()
+    {
+        professor.Text = "";
+    }
+
+    private void LoadText1()
+    {
+        professor.Text = emailText1;
+    }
+
+    private void LoadText2()
+    {
+        professor.Text = emailText2;
+    }
+
+    private class EmailTexts
+    {
+        public string Text1 { get; set; } = "";
+        public string Text2 { get; set; } = "";
+        public string Subject { get; set; } = "";
     }
 }
