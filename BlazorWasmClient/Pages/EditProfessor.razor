@@ -56,12 +56,12 @@ else
         <!-- Links for loading text -->
         <div>
             <button class="btn btn-secondary" @onclick="ClearText">Clear</button>
-            <button class="btn btn-info" @onclick="LoadText1">Text 1</button>
-            <button class="btn btn-info" @onclick="LoadText2">Text 2</button>
+            <button class="btn btn-info" @onclick="LoadText1">with</button>
+            <button class="btn btn-info" @onclick="LoadText2">without</button>
+            <button class="btn btn-info" @onclick="LoadText3">Med</button>
         </div>
 
         <div class="form-group">
-            <label>Text</label>
             <textarea class="form-control" style="height: 250px;" @bind="@professor.Text"></textarea>
         </div>
 
@@ -95,8 +95,8 @@ else
     private Professor? professor;
     private string emailText1 = "";
     private string emailText2 = "";
+    private string emailText3 = "";
     private string emailSubject = "";
-
     protected override async Task OnInitializedAsync()
     {
         professor = await ProfessorService.GetProfessorById(id);
@@ -107,6 +107,7 @@ else
         {
             emailText1 = emailData.Text1;
             emailText2 = emailData.Text2;
+            emailText3 = emailData.Text3;
             emailSubject = emailData.Subject;
         }
     }
@@ -137,11 +138,16 @@ else
     {
         professor.Text = emailText2;
     }
+    private void LoadText3()
+    {
+        professor.Text = emailText3;
+    }
 
     private class EmailTexts
     {
         public string Text1 { get; set; } = "";
         public string Text2 { get; set; } = "";
+        public string Text3 { get; set; } = "";
         public string Subject { get; set; } = "";
     }
 }
