@@ -102,7 +102,7 @@ else
         professor = await ProfessorService.GetProfessorById(id);
 
         // Load email texts from JSON
-        var emailData = await Http.GetFromJsonAsync<EmailTexts>("EUP/emailTexts.json");
+        var emailData = await Http.GetFromJsonAsync<EmailTexts>("https://amintester.github.io/EUP/emailTexts.json");
         if (emailData != null)
         {
             emailText1 = emailData.Text1;
