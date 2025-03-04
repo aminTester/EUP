@@ -2,7 +2,7 @@
 
 namespace BlazorWasmAPI.Controllers
 {
-    [Route("api/[controller")]
+    [Route("api/[controller]")]
     [ApiController]
     public class HealthController : ControllerBase
     {
