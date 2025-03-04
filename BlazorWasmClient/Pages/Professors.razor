@@ -2,6 +2,7 @@
 @using BlazorWasmClient.Services
 @using BlazorWasmShared.Models
 @using BlazorWasmShared.Enum
+@using System.Text.Json
 @inject ProfessorService ProfessorService
 @inject NavigationManager Navigation
 @inject IJSRuntime JS
@@ -123,7 +124,9 @@ else
     protected override async Task OnParametersSetAsync()
     {
         userKey = await JS.InvokeAsync<string>("getCookie", "accessKey");
+        userKey = await JS.InvokeAsync<string>("getCookie", "accessKey");
         professors = await ProfessorService.GetProfessorsByCountry(country);
+        await LoadSortCriteria();
     }
 
     private async Task SaveKey()
@@ -163,23 +166,36 @@ else
         {
             if (existing.ClickCount == 2)
             {
-                // Third click: Remove the sorting order for this column
                 sortCriteria.Remove(existing);
             }
             else
             {
-                // Toggle sorting direction
                 sortCriteria.Remove(existing);
                 sortCriteria.Add((column, !existing.Ascending, existing.ClickCount + 1));
             }
         }
         else
         {
-            // First click: Add with ascending direction
             sortCriteria.Add((column, true, 1));
         }
 
         ApplySorting();
+        SaveSortCriteria(); // Save to localStorage
+    }
+    private async Task SaveSortCriteria()
+    {
+        var sortJson = JsonSerializer.Serialize(sortCriteria);
+        await JS.InvokeVoidAsync("localStorage.setItem", "sortCriteria", sortJson);
+    }
+    private async Task LoadSortCriteria()
+    {
+        var sortJson = await JS.InvokeAsync<string>("localStorage.getItem", "sortCriteria");
+
+        if (!string.IsNullOrEmpty(sortJson))
+        {
+            sortCriteria = JsonSerializer.Deserialize<List<(string Column, bool Ascending, int ClickCount)>>(sortJson) ?? new List<(string, bool, int)>();
+            ApplySorting(); // Apply the sorting after loading
+        }
     }
 
     private void ApplySorting()
