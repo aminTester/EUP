@@ -174,27 +174,31 @@ else
     {
         Console.WriteLine("Sorting by: " + column);  // Debugging line
 
+        // Check if the column already has sorting criteria
         var existing = sortCriteria.FirstOrDefault(s => s.Column == column);
 
         if (existing.Column != null)
         {
             if (existing.ClickCount == 2)
             {
+                // Remove it if clicked twice (toggle off)
                 sortCriteria.Remove(existing);
             }
             else
             {
+                // Toggle ascending/descending order
                 sortCriteria.Remove(existing);
                 sortCriteria.Add((column, !existing.Ascending, existing.ClickCount + 1));
             }
         }
         else
         {
+            // Add new criteria for the column, starting with ascending order
             sortCriteria.Add((column, true, 1));
         }
 
         ApplySorting();
-        await SaveSortCriteria(); // Save sorting preferences after user action
+        await SaveSortCriteria();  // Save sorting preferences after user action
     }
 
 
@@ -203,36 +207,43 @@ else
 
     private async Task SaveSortCriteria()
     {
+        // Serialize the sort criteria to JSON
         var sortJson = JsonSerializer.Serialize(sortCriteria);
+        Console.WriteLine("Saving Sorting Criteria: " + sortJson);  // Debugging line
+
+        // Save to localStorage
         await JS.InvokeVoidAsync("localStorage.setItem", "sortCriteria", sortJson);
-        Console.WriteLine("Saved Sorting Criteria: " + sortJson); // Debugging line
     }
+
 
 
     private async Task LoadSortCriteria()
     {
         var sortJson = await JS.InvokeAsync<string>("localStorage.getItem", "sortCriteria");
-        Console.WriteLine("Loaded Sorting Criteria: " + sortJson); // Debugging line
+        Console.WriteLine("Loaded Sorting Criteria: " + sortJson);  // Debugging line
 
         if (!string.IsNullOrEmpty(sortJson))
         {
             try
             {
+                // Deserialize the sorting criteria
                 var loadedCriteria = JsonSerializer.Deserialize<List<(string Column, bool Ascending, int ClickCount)>>(sortJson);
 
-                // Check if the loaded criteria are valid
                 if (loadedCriteria != null && loadedCriteria.All(s => !string.IsNullOrEmpty(s.Column) && typeof(Professor).GetProperty(s.Column) != null))
                 {
+                    // Only set valid criteria
                     sortCriteria = loadedCriteria;
                 }
                 else
                 {
+                    // Reset to default if invalid
                     sortCriteria = new List<(string, bool, int)>();
                     Console.WriteLine("Invalid sorting criteria detected, resetting to default.");
                 }
             }
             catch (Exception ex)
             {
+                // Catch any deserialization issues and reset
                 Console.WriteLine($"Error deserializing sorting criteria: {ex.Message}");
                 sortCriteria = new List<(string, bool, int)>();
             }
@@ -267,9 +278,6 @@ else
         StateHasChanged(); // Trigger re-render
         Console.WriteLine($"Sorted professors list by {string.Join(", ", sortCriteria.Select(s => s.Column))}");
     }
-
-
-
 
 
     private object? GetPropertyValue(Professor prof, string propertyName)
