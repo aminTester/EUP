@@ -120,19 +120,22 @@ else
     [Parameter] public string? country { get; set; }
 
     private List<(string Column, bool Ascending, int ClickCount)> sortCriteria = new List<(string, bool, int)>();
-
     protected override async Task OnParametersSetAsync()
     {
-        userKey = await JS.InvokeAsync<string>("getCookie", "accessKey");
-
+        // First, load the sorting criteria before any data fetching
         await LoadSortCriteria(); // Load stored sorting before fetching data
 
+        // Fetch the professors by country
         professors = await ProfessorService.GetProfessorsByCountry(country);
         Console.WriteLine($"Loaded {professors?.Count} professors.");
 
-        // Apply sorting after loading data and sorting criteria
-        ApplySorting();
+        // Apply the sorting only if the professors list is loaded and valid
+        if (professors != null && professors.Any())
+        {
+            ApplySorting();  // Apply sorting after professors are loaded
+        }
     }
+
 
 
 
@@ -189,8 +192,9 @@ else
         }
 
         ApplySorting();
-        await SaveSortCriteria(); // Save sorting preferences
+        await SaveSortCriteria(); // Save sorting preferences after user action
     }
+
 
 
 
@@ -200,6 +204,7 @@ else
         var sortJson = JsonSerializer.Serialize(sortCriteria);
         await JS.InvokeVoidAsync("localStorage.setItem", "sortCriteria", sortJson);
     }
+
 
     private async Task LoadSortCriteria()
     {
@@ -226,6 +231,7 @@ else
             }
         }
     }
+
 
     private void ApplySorting()
     {
