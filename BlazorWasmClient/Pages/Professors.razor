@@ -130,8 +130,10 @@ else
         professors = await ProfessorService.GetProfessorsByCountry(country);
         Console.WriteLine($"Loaded {professors?.Count} professors.");
 
-        ApplySorting(); // Apply sorting after fetching data
+        // Apply sorting after loading data and sorting criteria
+        ApplySorting();
     }
+
 
 
     private async Task SaveKey()
@@ -224,10 +226,6 @@ else
             }
         }
     }
-
-
-
-
 
     private void ApplySorting()
     {
