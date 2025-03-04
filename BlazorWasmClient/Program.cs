@@ -24,6 +24,7 @@ public class Program
         {
             return new ProfessorService(sp.GetRequiredService<HttpClient>(), apiBaseUrl, sp.GetRequiredService<IJSRuntime>());
         });
+        builder.Services.AddScoped<HealthService>();
 
         await builder.Build().RunAsync();
     }
