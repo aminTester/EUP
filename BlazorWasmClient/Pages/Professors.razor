@@ -128,6 +128,7 @@ else
         await LoadSortCriteria(); // Load stored sorting before fetching data
 
         professors = await ProfessorService.GetProfessorsByCountry(country);
+        Console.WriteLine($"Loaded {professors?.Count} professors.");
 
         ApplySorting(); // Apply sorting after fetching data
     }
@@ -164,6 +165,8 @@ else
 
     private async Task AddSortCriteria(string column)
     {
+        Console.WriteLine("Sorting by: " + column);  // Debugging line
+
         var existing = sortCriteria.FirstOrDefault(s => s.Column == column);
 
         if (existing.Column != null)
@@ -188,6 +191,8 @@ else
     }
 
 
+
+
     private async Task SaveSortCriteria()
     {
         var sortJson = JsonSerializer.Serialize(sortCriteria);
@@ -197,6 +202,7 @@ else
     private async Task LoadSortCriteria()
     {
         var sortJson = await JS.InvokeAsync<string>("localStorage.getItem", "sortCriteria");
+        Console.WriteLine("Loaded Sorting Criteria: " + sortJson); // Debugging line
 
         if (!string.IsNullOrEmpty(sortJson))
         {
@@ -228,7 +234,10 @@ else
         if (professors == null || professors.Count == 0 || sortCriteria.Count == 0)
             return;
 
-        IOrderedEnumerable<Professor> sortedProfessors = professors.OrderBy(p => 0); // Default order
+        IOrderedEnumerable<Professor> sortedProfessors = professors.OrderBy(p => 1); // Start with an initial sort
+
+        // Debugging line to check sorting criteria
+        Console.WriteLine("Sorting Criteria: " + string.Join(", ", sortCriteria.Select(s => $"{s.Column} ({(s.Ascending ? "ASC" : "DESC")})")));
 
         foreach (var (column, ascending, _) in sortCriteria)
         {
@@ -237,9 +246,10 @@ else
                 : sortedProfessors.ThenByDescending(p => GetPropertyValue(p, column));
         }
 
-        professors = sortedProfessors.ToList();
-        StateHasChanged();
+        professors = sortedProfessors.ToList();  // Ensure the list is updated with sorted data
+        StateHasChanged();  // Trigger re-rendering
     }
+
 
 
 
@@ -262,12 +272,12 @@ else
     private string GetSortIcon(string column)
     {
         var criteria = sortCriteria.FirstOrDefault(s => s.Column == column);
-
         if (criteria.Column == null)
-            return ""; // No sorting applied
+            return "";  // No sorting applied
 
-        return criteria.Ascending ? "▲" : "▼"; // Use clear icons
+        return criteria.Ascending ? "▲" : "▼"; // Sorting icons
     }
+
 
 
 }
