@@ -124,10 +124,14 @@ else
     protected override async Task OnParametersSetAsync()
     {
         userKey = await JS.InvokeAsync<string>("getCookie", "accessKey");
-        userKey = await JS.InvokeAsync<string>("getCookie", "accessKey");
+
+        await LoadSortCriteria(); // Load stored sort preferences before fetching data
+
         professors = await ProfessorService.GetProfessorsByCountry(country);
-        await LoadSortCriteria();
+
+        ApplySorting(); // Apply sorting AFTER loading new data
     }
+
 
     private async Task SaveKey()
     {
@@ -158,7 +162,7 @@ else
         };
     }
 
-    private void AddSortCriteria(string column)
+    private async Task AddSortCriteria(string column)
     {
         var existing = sortCriteria.FirstOrDefault(s => s.Column == column);
 
@@ -180,13 +184,15 @@ else
         }
 
         ApplySorting();
-        SaveSortCriteria(); // Save to localStorage
+        await SaveSortCriteria(); // Save sorting preferences
     }
+
     private async Task SaveSortCriteria()
     {
         var sortJson = JsonSerializer.Serialize(sortCriteria);
         await JS.InvokeVoidAsync("localStorage.setItem", "sortCriteria", sortJson);
     }
+
     private async Task LoadSortCriteria()
     {
         var sortJson = await JS.InvokeAsync<string>("localStorage.getItem", "sortCriteria");
@@ -197,21 +203,23 @@ else
 
             if (loadedCriteria != null)
             {
-                // Ensure only valid properties are kept
                 sortCriteria = loadedCriteria
                     .Where(s => !string.IsNullOrEmpty(s.Column) && typeof(Professor).GetProperty(s.Column) != null)
                     .ToList();
-
-                ApplySorting(); // Apply the sorting after loading
             }
         }
     }
 
 
+
+
     private void ApplySorting()
     {
-        // Apply sorting based on the stored criteria (order matters here)
-        IOrderedEnumerable<Professor> sortedProfessors = professors.OrderBy(p => 0);  // Default order (no sorting)
+        if (professors == null || professors.Count == 0 || sortCriteria.Count == 0)
+            return;
+
+        // Sort by multiple criteria
+        IOrderedEnumerable<Professor> sortedProfessors = professors.OrderBy(p => 0);
 
         foreach (var (column, ascending, _) in sortCriteria)
         {
@@ -223,6 +231,8 @@ else
         professors = sortedProfessors.ToList();
         StateHasChanged();
     }
+
+
 
     private object? GetPropertyValue(Professor prof, string propertyName)
     {
@@ -241,7 +251,12 @@ else
 
     private string GetSortIcon(string column)
     {
-        var sortDirection = sortCriteria.FirstOrDefault(s => s.Column == column).Ascending;
-        return sortDirection ? "↑" : "↓";
+        var criteria = sortCriteria.FirstOrDefault(s => s.Column == column);
+
+        if (criteria.Column == null)
+            return ""; // No sorting applied
+
+        return criteria.Ascending ? "↑" : "↓";
     }
+
 }
