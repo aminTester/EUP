@@ -2,7 +2,6 @@
 @using BlazorWasmClient.Services
 @using BlazorWasmShared.Models
 @using BlazorWasmShared.Enum
-@using System.Text.Json
 @inject ProfessorService ProfessorService
 @inject NavigationManager Navigation
 @inject IJSRuntime JS
@@ -120,26 +119,12 @@ else
     [Parameter] public string? country { get; set; }
 
     private List<(string Column, bool Ascending, int ClickCount)> sortCriteria = new List<(string, bool, int)>();
+
     protected override async Task OnParametersSetAsync()
     {
-        // Load the sorting criteria from localStorage before fetching data
-        await LoadSortCriteria();
-
-        // Fetch the professors by country
+        userKey = await JS.InvokeAsync<string>("getCookie", "accessKey");
         professors = await ProfessorService.GetProfessorsByCountry(country);
-        Console.WriteLine($"Loaded {professors?.Count} professors from country {country ?? "All Countries"}");
-
-        // Apply sorting only if professors are not null or empty
-        if (professors != null && professors.Any())
-        {
-            ApplySorting();  // Apply sorting after professors are loaded
-        }
-        else
-        {
-            Console.WriteLine("No professors to display.");
-        }
     }
-
 
     private async Task SaveKey()
     {
@@ -170,102 +155,37 @@ else
         };
     }
 
-    private async Task AddSortCriteria(string column)
+    private void AddSortCriteria(string column)
     {
-        Console.WriteLine("Sorting by: " + column);  // Debugging line
-
-        // Check if the column already has sorting criteria
         var existing = sortCriteria.FirstOrDefault(s => s.Column == column);
 
         if (existing.Column != null)
         {
             if (existing.ClickCount == 2)
             {
-                // Remove it if clicked twice (toggle off)
+                // Third click: Remove the sorting order for this column
                 sortCriteria.Remove(existing);
             }
             else
             {
-                // Toggle ascending/descending order
+                // Toggle sorting direction
                 sortCriteria.Remove(existing);
                 sortCriteria.Add((column, !existing.Ascending, existing.ClickCount + 1));
             }
         }
         else
         {
-            // Add new criteria for the column, starting with ascending order
+            // First click: Add with ascending direction
             sortCriteria.Add((column, true, 1));
         }
 
         ApplySorting();
-        await SaveSortCriteria();  // Save sorting preferences after user action
     }
-
-
-
-
-
-    private async Task SaveSortCriteria()
-    {
-        // Serialize the sort criteria to JSON
-        var sortJson = JsonSerializer.Serialize(sortCriteria);
-        Console.WriteLine("Saving Sorting Criteria: " + sortJson);  // Debugging line
-
-        // Save to localStorage
-        await JS.InvokeVoidAsync("localStorage.setItem", "sortCriteria", sortJson);
-    }
-
-
-
-    private async Task LoadSortCriteria()
-    {
-        var sortJson = await JS.InvokeAsync<string>("localStorage.getItem", "sortCriteria");
-        Console.WriteLine("Loaded Sorting Criteria: " + sortJson);  // Debugging line
-
-        if (!string.IsNullOrEmpty(sortJson))
-        {
-            try
-            {
-                // Deserialize the sorting criteria
-                var loadedCriteria = JsonSerializer.Deserialize<List<(string Column, bool Ascending, int ClickCount)>>(sortJson);
-
-                if (loadedCriteria != null && loadedCriteria.All(s => !string.IsNullOrEmpty(s.Column) && typeof(Professor).GetProperty(s.Column) != null))
-                {
-                    // Only set valid criteria
-                    sortCriteria = loadedCriteria;
-                }
-                else
-                {
-                    // Reset to default if invalid
-                    sortCriteria = new List<(string, bool, int)>();
-                    Console.WriteLine("Invalid sorting criteria detected, resetting to default.");
-                }
-            }
-            catch (Exception ex)
-            {
-                // Catch any deserialization issues and reset
-                Console.WriteLine($"Error deserializing sorting criteria: {ex.Message}");
-                sortCriteria = new List<(string, bool, int)>();
-            }
-        }
-        else
-        {
-            Console.WriteLine("No sorting criteria found in localStorage.");
-            sortCriteria = new List<(string, bool, int)>();
-        }
-    }
-
-
 
     private void ApplySorting()
     {
-        if (professors == null || !professors.Any() || sortCriteria.Count == 0)
-        {
-            Console.WriteLine("No sorting criteria or no professors to sort.");
-            return;
-        }
-
-        IOrderedEnumerable<Professor> sortedProfessors = professors.OrderBy(p => 1); // Default sort (no-op)
+        // Apply sorting based on the stored criteria (order matters here)
+        IOrderedEnumerable<Professor> sortedProfessors = professors.OrderBy(p => 0);  // Default order (no sorting)
 
         foreach (var (column, ascending, _) in sortCriteria)
         {
@@ -274,27 +194,14 @@ else
                 : sortedProfessors.ThenByDescending(p => GetPropertyValue(p, column));
         }
 
-        professors = sortedProfessors.ToList(); // Update the list with sorted data
-        StateHasChanged(); // Trigger re-render
-        Console.WriteLine($"Sorted professors list by {string.Join(", ", sortCriteria.Select(s => s.Column))}");
+        professors = sortedProfessors.ToList();
+        StateHasChanged();
     }
-
 
     private object? GetPropertyValue(Professor prof, string propertyName)
     {
-        if (string.IsNullOrEmpty(propertyName))
-        {
-            return null;
-        }
-
-        var property = typeof(Professor).GetProperty(propertyName);
-        var value = property?.GetValue(prof);
-
-        Console.WriteLine($"Property: {propertyName}, Value: {value}"); // Debugging line
-        return value;
+        return typeof(Professor).GetProperty(propertyName)?.GetValue(prof);
     }
-
-
 
     private bool IsSorted(string column)
     {
@@ -303,13 +210,7 @@ else
 
     private string GetSortIcon(string column)
     {
-        var criteria = sortCriteria.FirstOrDefault(s => s.Column == column);
-        if (criteria.Column == null)
-            return "";  // No sorting applied
-
-        return criteria.Ascending ? "▲" : "▼"; // Sorting icons
+        var sortDirection = sortCriteria.FirstOrDefault(s => s.Column == column).Ascending;
+        return sortDirection ? "↑" : "↓";
     }
-
-
-
 }

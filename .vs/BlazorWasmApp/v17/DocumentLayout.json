@@ -14,7 +14,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 4,
+          "SelectedChildIndex": 6,
           "Children": [
             {
               "$type": "Bookmark",
@@ -26,11 +26,19 @@
             },
             {
               "$type": "Bookmark",
+              "Name": "ST:130:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+            },
+            {
+              "$type": "Bookmark",
               "Name": "ST:129:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
             },
             {
               "$type": "Bookmark",
               "Name": "ST:130:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:131:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
             },
             {
               "$type": "Document",
@@ -40,9 +48,9 @@
               "RelativeDocumentMoniker": "BlazorWasmClient\\Pages\\Professors.razor",
               "ToolTip": "D:\\Works\\Blazor\\EUP\\BlazorWasmClient\\Pages\\Professors.razor*",
               "RelativeToolTip": "BlazorWasmClient\\Pages\\Professors.razor*",
-              "ViewState": "AgIAAAABAAAAAAAAAAAQwBkBAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAALMAAAAAAAAAAAAowNgAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-03-04T05:40:07.172Z",
+              "WhenOpened": "2025-03-04T08:01:37.609Z",
               "EditorCaption": ""
             }
           ]
