@@ -122,21 +122,23 @@ else
     private List<(string Column, bool Ascending, int ClickCount)> sortCriteria = new List<(string, bool, int)>();
     protected override async Task OnParametersSetAsync()
     {
-        // First, load the sorting criteria before any data fetching
-        await LoadSortCriteria(); // Load stored sorting before fetching data
+        // Load the sorting criteria from localStorage before fetching data
+        await LoadSortCriteria();
 
         // Fetch the professors by country
         professors = await ProfessorService.GetProfessorsByCountry(country);
-        Console.WriteLine($"Loaded {professors?.Count} professors.");
+        Console.WriteLine($"Loaded {professors?.Count} professors from country {country ?? "All Countries"}");
 
-        // Apply the sorting only if the professors list is loaded and valid
+        // Apply sorting only if professors are not null or empty
         if (professors != null && professors.Any())
         {
             ApplySorting();  // Apply sorting after professors are loaded
         }
+        else
+        {
+            Console.WriteLine("No professors to display.");
+        }
     }
-
-
 
 
     private async Task SaveKey()
@@ -235,13 +237,13 @@ else
 
     private void ApplySorting()
     {
-        if (professors == null || professors.Count == 0 || sortCriteria.Count == 0)
+        if (professors == null || !professors.Any() || sortCriteria.Count == 0)
+        {
+            Console.WriteLine("No sorting criteria or no professors to sort.");
             return;
+        }
 
-        IOrderedEnumerable<Professor> sortedProfessors = professors.OrderBy(p => 1); // Start with an initial sort
-
-        // Debugging line to check sorting criteria
-        Console.WriteLine("Sorting Criteria: " + string.Join(", ", sortCriteria.Select(s => $"{s.Column} ({(s.Ascending ? "ASC" : "DESC")})")));
+        IOrderedEnumerable<Professor> sortedProfessors = professors?.OrderBy(p => 1) ?? new List<Professor>().OrderBy(p => 1);
 
         foreach (var (column, ascending, _) in sortCriteria)
         {
@@ -250,9 +252,11 @@ else
                 : sortedProfessors.ThenByDescending(p => GetPropertyValue(p, column));
         }
 
-        professors = sortedProfessors.ToList();  // Ensure the list is updated with sorted data
-        StateHasChanged();  // Trigger re-rendering
+        professors = sortedProfessors.ToList(); // Update the list with sorted data
+        StateHasChanged(); // Trigger re-render
+        Console.WriteLine($"Sorted professors list by {string.Join(", ", sortCriteria.Select(s => s.Column))}");
     }
+
 
 
 
@@ -261,11 +265,17 @@ else
     private object? GetPropertyValue(Professor prof, string propertyName)
     {
         if (string.IsNullOrEmpty(propertyName))
+        {
             return null;
+        }
 
         var property = typeof(Professor).GetProperty(propertyName);
-        return property?.GetValue(prof);
+        var value = property?.GetValue(prof);
+
+        Console.WriteLine($"Property: {propertyName}, Value: {value}"); // Debugging line
+        return value;
     }
+
 
 
     private bool IsSorted(string column)
