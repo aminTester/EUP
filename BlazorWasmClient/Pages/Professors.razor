@@ -193,10 +193,20 @@ else
 
         if (!string.IsNullOrEmpty(sortJson))
         {
-            sortCriteria = JsonSerializer.Deserialize<List<(string Column, bool Ascending, int ClickCount)>>(sortJson) ?? new List<(string, bool, int)>();
-            ApplySorting(); // Apply the sorting after loading
+            var loadedCriteria = JsonSerializer.Deserialize<List<(string Column, bool Ascending, int ClickCount)>>(sortJson);
+
+            if (loadedCriteria != null)
+            {
+                // Ensure only valid properties are kept
+                sortCriteria = loadedCriteria
+                    .Where(s => !string.IsNullOrEmpty(s.Column) && typeof(Professor).GetProperty(s.Column) != null)
+                    .ToList();
+
+                ApplySorting(); // Apply the sorting after loading
+            }
         }
     }
+
 
     private void ApplySorting()
     {
@@ -216,8 +226,13 @@ else
 
     private object? GetPropertyValue(Professor prof, string propertyName)
     {
-        return typeof(Professor).GetProperty(propertyName)?.GetValue(prof);
+        if (string.IsNullOrEmpty(propertyName))
+            return null;
+
+        var property = typeof(Professor).GetProperty(propertyName);
+        return property?.GetValue(prof);
     }
+
 
     private bool IsSorted(string column)
     {
