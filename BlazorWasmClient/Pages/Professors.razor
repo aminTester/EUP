@@ -125,11 +125,11 @@ else
     {
         userKey = await JS.InvokeAsync<string>("getCookie", "accessKey");
 
-        await LoadSortCriteria(); // Load stored sort preferences before fetching data
+        await LoadSortCriteria(); // Load stored sorting before fetching data
 
         professors = await ProfessorService.GetProfessorsByCountry(country);
 
-        ApplySorting(); // Apply sorting AFTER loading new data
+        ApplySorting(); // Apply sorting after fetching data
     }
 
 
@@ -187,6 +187,7 @@ else
         await SaveSortCriteria(); // Save sorting preferences
     }
 
+
     private async Task SaveSortCriteria()
     {
         var sortJson = JsonSerializer.Serialize(sortCriteria);
@@ -199,16 +200,25 @@ else
 
         if (!string.IsNullOrEmpty(sortJson))
         {
-            var loadedCriteria = JsonSerializer.Deserialize<List<(string Column, bool Ascending, int ClickCount)>>(sortJson);
-
-            if (loadedCriteria != null)
+            try
             {
-                sortCriteria = loadedCriteria
-                    .Where(s => !string.IsNullOrEmpty(s.Column) && typeof(Professor).GetProperty(s.Column) != null)
-                    .ToList();
+                var loadedCriteria = JsonSerializer.Deserialize<List<(string Column, bool Ascending, int ClickCount)>>(sortJson);
+
+                if (loadedCriteria != null)
+                {
+                    // Ensure only valid properties are stored
+                    sortCriteria = loadedCriteria
+                        .Where(s => !string.IsNullOrEmpty(s.Column) && typeof(Professor).GetProperty(s.Column) != null)
+                        .ToList();
+                }
+            }
+            catch (Exception)
+            {
+                sortCriteria = new List<(string Column, bool Ascending, int ClickCount)>();
             }
         }
     }
+
 
 
 
@@ -218,8 +228,7 @@ else
         if (professors == null || professors.Count == 0 || sortCriteria.Count == 0)
             return;
 
-        // Sort by multiple criteria
-        IOrderedEnumerable<Professor> sortedProfessors = professors.OrderBy(p => 0);
+        IOrderedEnumerable<Professor> sortedProfessors = professors.OrderBy(p => 0); // Default order
 
         foreach (var (column, ascending, _) in sortCriteria)
         {
@@ -231,6 +240,7 @@ else
         professors = sortedProfessors.ToList();
         StateHasChanged();
     }
+
 
 
 
@@ -256,7 +266,8 @@ else
         if (criteria.Column == null)
             return ""; // No sorting applied
 
-        return criteria.Ascending ? "↑" : "↓";
+        return criteria.Ascending ? "▲" : "▼"; // Use clear icons
     }
+
 
 }
