@@ -205,6 +205,7 @@ else
     {
         var sortJson = JsonSerializer.Serialize(sortCriteria);
         await JS.InvokeVoidAsync("localStorage.setItem", "sortCriteria", sortJson);
+        Console.WriteLine("Saved Sorting Criteria: " + sortJson); // Debugging line
     }
 
 
@@ -219,20 +220,30 @@ else
             {
                 var loadedCriteria = JsonSerializer.Deserialize<List<(string Column, bool Ascending, int ClickCount)>>(sortJson);
 
-                if (loadedCriteria != null)
+                // Check if the loaded criteria are valid
+                if (loadedCriteria != null && loadedCriteria.All(s => !string.IsNullOrEmpty(s.Column) && typeof(Professor).GetProperty(s.Column) != null))
                 {
-                    // Ensure only valid properties are stored
-                    sortCriteria = loadedCriteria
-                        .Where(s => !string.IsNullOrEmpty(s.Column) && typeof(Professor).GetProperty(s.Column) != null)
-                        .ToList();
+                    sortCriteria = loadedCriteria;
+                }
+                else
+                {
+                    sortCriteria = new List<(string, bool, int)>();
+                    Console.WriteLine("Invalid sorting criteria detected, resetting to default.");
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                sortCriteria = new List<(string Column, bool Ascending, int ClickCount)>();
+                Console.WriteLine($"Error deserializing sorting criteria: {ex.Message}");
+                sortCriteria = new List<(string, bool, int)>();
             }
         }
+        else
+        {
+            Console.WriteLine("No sorting criteria found in localStorage.");
+            sortCriteria = new List<(string, bool, int)>();
+        }
     }
+
 
 
     private void ApplySorting()
@@ -243,7 +254,7 @@ else
             return;
         }
 
-        IOrderedEnumerable<Professor> sortedProfessors = professors?.OrderBy(p => 1) ?? new List<Professor>().OrderBy(p => 1);
+        IOrderedEnumerable<Professor> sortedProfessors = professors.OrderBy(p => 1); // Default sort (no-op)
 
         foreach (var (column, ascending, _) in sortCriteria)
         {
@@ -256,7 +267,6 @@ else
         StateHasChanged(); // Trigger re-render
         Console.WriteLine($"Sorted professors list by {string.Join(", ", sortCriteria.Select(s => s.Column))}");
     }
-
 
 
 
