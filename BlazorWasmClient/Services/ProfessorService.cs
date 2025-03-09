@@ -1,4 +1,5 @@
-﻿using System.Net.Http.Json;
+﻿using System.Net.Http;
+using System.Net.Http.Json;
 using BlazorWasmShared.Models;
 using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.JSInterop;
@@ -130,6 +131,14 @@ namespace BlazorWasmClient.Services
                 Console.WriteLine($"Exception during import: {ex.Message}");
                 return false;
             }
+        }
+        public async Task<List<Professor>> SearchProfessorsAsync(string name)
+        {
+            if (string.IsNullOrWhiteSpace(name))
+            {
+                return new List<Professor>();
+            }
+            return await _http.GetFromJsonAsync<List<Professor>>($"api/professors/search?name={name}") ?? new List<Professor>();
         }
 
 

@@ -185,7 +185,7 @@ else
     private void ApplySorting()
     {
         // Apply sorting based on the stored criteria (order matters here)
-        IOrderedEnumerable<Professor> sortedProfessors = professors.OrderBy(p => 0);  // Default order (no sorting)
+        IOrderedEnumerable<Professor> sortedProfessors = professors.OrderBy(p => 1);  // Default order (no sorting)
 
         foreach (var (column, ascending, _) in sortCriteria)
         {

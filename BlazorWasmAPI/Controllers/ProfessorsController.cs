@@ -178,5 +178,19 @@ namespace BlazorWasmAPI.Controllers
         }
 
 
+        [HttpGet("search")]
+        public async Task<IActionResult> SearchProfessors([FromQuery] string name)
+        {
+            if (string.IsNullOrWhiteSpace(name))
+                return BadRequest("Search term cannot be empty.");
+
+            var professors = await _context.Professors
+                .Where(p => p.FullName.Contains(name))
+                .ToListAsync();
+
+            return Ok(professors);
+        }
+
+
     }
 }
