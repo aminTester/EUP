@@ -154,12 +154,15 @@ else
     }
 
 
-    private void OpenEmailClient()
+    private async Task OpenEmailClient()
     {
         if (!string.IsNullOrEmpty(professor.Email))
         {
             string mailto = $"mailto:{professor.Email}?subject={Uri.EscapeDataString(emailSubject)}";
             Navigation.NavigateTo(mailto, forceLoad: true);
+
+            // Update only EmailDate in the database
+            await ProfessorService.UpdateEmailDateAsync(professor.Id);
         }
     }
 }
