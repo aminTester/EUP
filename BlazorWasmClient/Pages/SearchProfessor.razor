@@ -17,8 +17,11 @@ else
     <ul>
         @foreach (var professor in professors)
         {
-            <li>@professor.FullName @professor.Country  @professor.University</li>
-        }
+            <li>
+                <a href="edit-professor/@professor.Id">@professor.FullName</a> -@professor.Country -@professor.University
+            </li>
+           
+       }
     </ul>
 }
 
