@@ -35,7 +35,10 @@ else
             <label>University</label>
             <input class="form-control" value="@professor.University" disabled />
         </div>
-
+        <div class="form-group">
+            <label>Email</label>
+            <input class="form-control" value="@professor.Email" disabled />
+        </div>
         <div class="form-group">
             <label>WOS</label>
             <a href="@professor.Wos" target="_blank">@professor.Wos</a>
@@ -46,13 +49,7 @@ else
             <a href="@professor.Web" target="_blank">@professor.Web</a>
         </div>
 
-        <div class="form-group">
-            <label>Email</label>
-            @if (!string.IsNullOrEmpty(professor.Email))
-            {
-                <a href="mailto:@professor.Email?subject=@emailSubject">@professor.Email</a>
-            }
-        </div>
+        
         <!-- Links for loading text -->
         <div>
             <button class="btn btn-secondary" @onclick="ClearText">Clear</button>
@@ -84,6 +81,11 @@ else
                 }
             </select>
         </div>
+       
+            @if (!string.IsNullOrEmpty(professor.Email))
+            {
+            <button class="btn btn-danger" @onclick="OpenEmailClient">Email</button>
+            }
 
         <button class="btn btn-primary" @onclick="SaveChanges">Save</button>
         <button class="btn btn-secondary" @onclick="GoBack">Back</button>
@@ -149,5 +151,15 @@ else
         public string Text2 { get; set; } = "";
         public string Text3 { get; set; } = "";
         public string Subject { get; set; } = "";
+    }
+
+
+    private void OpenEmailClient()
+    {
+        if (!string.IsNullOrEmpty(professor.Email))
+        {
+            string mailto = $"mailto:{professor.Email}?subject={Uri.EscapeDataString(emailSubject)}";
+            Navigation.NavigateTo(mailto, forceLoad: true);
+        }
     }
 }

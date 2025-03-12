@@ -192,5 +192,17 @@ namespace BlazorWasmAPI.Controllers
 
             return Ok(professors);
         }
+
+        [HttpPut("{id}/update-email-date")]
+        public async Task<IActionResult> UpdateEmailDate(int id)
+        {
+            var professor = await _context.Professors.FindAsync(id);
+            if (professor == null) return NotFound();
+
+            professor.EmailDate = DateTime.Now;
+            await _context.SaveChangesAsync();
+
+            return NoContent();
+        }
     }
 }

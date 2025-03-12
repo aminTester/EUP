@@ -141,6 +141,10 @@ namespace BlazorWasmClient.Services
             return await _http.GetFromJsonAsync<List<Professor>>($"api/professors/search?name={name}") ?? new List<Professor>();
         }
 
+        public async Task UpdateEmailDateAsync(int professorId)
+        {
+            await _http.PutAsync($"api/professors/{professorId}/update-email-date", null);
+        }
 
     }
 }
