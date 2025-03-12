@@ -184,9 +184,12 @@ namespace BlazorWasmAPI.Controllers
             if (string.IsNullOrWhiteSpace(name))
                 return BadRequest("Search term cannot be empty.");
 
+            string lowerName = name.ToLower();
+
             var professors = await _context.Professors
-          .Where(p => EF.Functions.Like(p.FullName, $"%{name}%"))
-          .ToListAsync();
+                .Where(p => EF.Functions.Like(p.FullName.ToLower(), $"%{lowerName}%"))
+                .ToListAsync();
+
             return Ok(professors);
         }
     }
