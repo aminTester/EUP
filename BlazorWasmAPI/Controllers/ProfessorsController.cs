@@ -200,6 +200,7 @@ namespace BlazorWasmAPI.Controllers
             if (professor == null) return NotFound();
 
             professor.EmailDate = DateTime.Now;
+            professor.Result = ResultType.Emailed;
             await _context.SaveChangesAsync();
 
             return NoContent();
