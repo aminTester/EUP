@@ -146,5 +146,11 @@ namespace BlazorWasmClient.Services
             await _http.PutAsync($"api/professors/{professorId}/update-email-date", null);
         }
 
+        public async Task<bool> DeleteRecordAsync(int id)
+        {
+            var response = await _http.DeleteAsync($"api/professors/{id}");
+            return response.IsSuccessStatusCode;
+        }
+
     }
 }

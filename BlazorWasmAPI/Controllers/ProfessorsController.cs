@@ -205,5 +205,16 @@ namespace BlazorWasmAPI.Controllers
 
             return NoContent();
         }
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteRecord(int id)
+        {
+            var record = await _context.Professors.FindAsync(id);
+            if (record == null) return NotFound();
+
+            _context.Professors.Remove(record);
+            await _context.SaveChangesAsync();
+
+            return NoContent();
+        }
     }
 }
