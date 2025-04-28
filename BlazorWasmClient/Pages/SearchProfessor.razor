@@ -1,7 +1,9 @@
 ﻿@page "/search-professors"
 @using BlazorWasmClient.Services
 @using BlazorWasmShared.Models
+@inject HttpClient Http
 @inject ProfessorService ProfessorService
+@inject IJSRuntime JS
 
 <h3>Search Professors</h3>
 
@@ -18,7 +20,7 @@ else
         @foreach (var professor in professors)
         {
             <li>
-                <a href="edit-professor/@professor.Id">@professor.FullName</a> -@professor.Country -@professor.University
+                <a href="edit-professor/@professor.Id">@professor.FullName</a> -@professor.Country -@professor.University <button @onclick="() => DeleteRecord(professor.Id)">Delete</button>
             </li>
        }
     </ul>
@@ -32,5 +34,16 @@ else
     {
         professors = await ProfessorService.SearchProfessorsAsync(searchTerm);
     }
-
+    private async Task DeleteRecord(int id)
+    {
+        var confirmed = await JS.InvokeAsync<bool>("confirm", "Are you sure you want to delete this record?");
+        if (confirmed)
+        {
+            var success = await ProfessorService.DeleteRecordAsync(id);
+            if (success)
+            {
+                professors.RemoveAll(r => r.Id == id);
+            }
+        }
+    }
 }
