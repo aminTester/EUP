@@ -149,7 +149,7 @@ else
         if (result == ResultType.Progress) return "table-primary";
         if (result==ResultType.Reject) return "table-danger";
         if (result==ResultType.Accept) return "table-success";
-        if (result == ResultType.Emailed && emailDate.AddDays(30) < DateTime.Now) return "table-Warning";
+        if (result == ResultType.Emailed && emailDate.AddDays(30) < DateTime.Now) return "table-warning";
         else
             return "";
     }
