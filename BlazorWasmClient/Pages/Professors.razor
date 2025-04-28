@@ -24,7 +24,7 @@ else
     else
     {
         <div class="container-fluid">
-            <table class="table table-hover table-striped">
+            <table class="table table-hover ">
                 <thead>
                     <tr>
                         <th @onclick="() => AddSortCriteria(nameof(Professor.FullName))" style="cursor: pointer;">
@@ -90,7 +90,7 @@ else
                 <tbody>
                     @foreach (var prof in professors)
                     {
-                        <tr class="@(GetRowClass(prof.Result))">
+                        <tr class="@(GetRowClass(prof.Result,prof.EmailDate))">
                             <td>
                                 <a href="edit-professor/@prof.Id">@prof.FullName</a>
                             </td>
@@ -143,16 +143,15 @@ else
         StateHasChanged();
     }
 
-    private string GetRowClass(ResultType? result)
+    private string GetRowClass(ResultType? result,DateTime emailDate)
     {
-        return result switch
-        {
-            ResultType.Emailed => "table-secondary",
-            ResultType.Progress => "table-primary",
-            ResultType.Reject => "table-danger",
-            ResultType.Accept => "table-success",
-            _ => ""
-        };
+        if (result== ResultType.Emailed) return "table-secondary";
+        if (result == ResultType.Progress) return "table-primary";
+        if (result==ResultType.Reject) return "table-danger";
+        if (result==ResultType.Accept) return "table-success";
+        if (result == ResultType.Emailed && emailDate.AddDays(30) < DateTime.Now) return "table-Warning";
+        else
+            return "";
     }
 
     private void AddSortCriteria(string column)
