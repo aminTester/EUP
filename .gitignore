@@ -17,3 +17,4 @@ release/
 /.vs/BlazorWasmApp/v17/.suo
 /.vs/BlazorWasmApp/v17/DocumentLayout.backup.json
 /.vs/BlazorWasmApp/v17/DocumentLayout.json
+/BlazorWasmClient/wwwroot/emailTexts.json
