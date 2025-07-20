@@ -3,6 +3,10 @@
   "WorkspaceRootPath": "D:\\Works\\Blazor\\EUP\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{1416DD41-D232-4014-982E-2E7DD34A4151}|BlazorWasmClient\\BlazorWasmClient.csproj|d:\\works\\blazor\\eup\\blazorwasmclient\\wwwroot\\emailtexts.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{1416DD41-D232-4014-982E-2E7DD34A4151}|BlazorWasmClient\\BlazorWasmClient.csproj|solutionrelative:blazorwasmclient\\wwwroot\\emailtexts.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{1416DD41-D232-4014-982E-2E7DD34A4151}|BlazorWasmClient\\BlazorWasmClient.csproj|d:\\works\\blazor\\eup\\blazorwasmclient\\pages\\professors.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
       "RelativeMoniker": "D:0:0:{1416DD41-D232-4014-982E-2E7DD34A4151}|BlazorWasmClient\\BlazorWasmClient.csproj|solutionrelative:blazorwasmclient\\pages\\professors.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     }
@@ -14,7 +18,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 10,
+          "SelectedChildIndex": 11,
           "Children": [
             {
               "$type": "Bookmark",
@@ -57,16 +61,33 @@
               "Name": "ST:134:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
             },
             {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
+            },
+            {
               "$type": "Document",
               "DocumentIndex": 0,
+              "Title": "emailTexts.json",
+              "DocumentMoniker": "D:\\Works\\Blazor\\EUP\\BlazorWasmClient\\wwwroot\\emailTexts.json",
+              "RelativeDocumentMoniker": "BlazorWasmClient\\wwwroot\\emailTexts.json",
+              "ToolTip": "D:\\Works\\Blazor\\EUP\\BlazorWasmClient\\wwwroot\\emailTexts.json*",
+              "RelativeToolTip": "BlazorWasmClient\\wwwroot\\emailTexts.json*",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2025-07-20T12:10:55.644Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
               "Title": "Professors.razor",
               "DocumentMoniker": "D:\\Works\\Blazor\\EUP\\BlazorWasmClient\\Pages\\Professors.razor",
               "RelativeDocumentMoniker": "BlazorWasmClient\\Pages\\Professors.razor",
-              "ToolTip": "D:\\Works\\Blazor\\EUP\\BlazorWasmClient\\Pages\\Professors.razor*",
-              "RelativeToolTip": "BlazorWasmClient\\Pages\\Professors.razor*",
-              "ViewState": "AgIAAH4AAAAAAAAAAAAAAJQAAABDAAAAAAAAAA==",
+              "ToolTip": "D:\\Works\\Blazor\\EUP\\BlazorWasmClient\\Pages\\Professors.razor",
+              "RelativeToolTip": "BlazorWasmClient\\Pages\\Professors.razor",
+              "ViewState": "AgIAACcAAAAAAAAAAAAAAF0AAAAgAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-04-28T07:23:21.962Z",
+              "WhenOpened": "2025-07-20T11:34:47.395Z",
               "EditorCaption": ""
             }
           ]
