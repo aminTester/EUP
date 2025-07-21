@@ -1,7 +1,12 @@
 {
   "Version": 1,
   "WorkspaceRootPath": "D:\\Works\\Blazor\\EUP\\",
-  "Documents": [],
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{1416DD41-D232-4014-982E-2E7DD34A4151}|BlazorWasmClient\\BlazorWasmClient.csproj|d:\\works\\blazor\\eup\\blazorwasmclient\\wwwroot\\emailtexts.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{1416DD41-D232-4014-982E-2E7DD34A4151}|BlazorWasmClient\\BlazorWasmClient.csproj|solutionrelative:blazorwasmclient\\wwwroot\\emailtexts.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    }
+  ],
   "DocumentGroupContainers": [
     {
       "Orientation": 0,
@@ -9,7 +14,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": -1,
+          "SelectedChildIndex": 11,
           "Children": [
             {
               "$type": "Bookmark",
@@ -54,6 +59,19 @@
             {
               "$type": "Bookmark",
               "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "emailTexts.json",
+              "DocumentMoniker": "D:\\Works\\Blazor\\EUP\\BlazorWasmClient\\wwwroot\\emailTexts.json",
+              "RelativeDocumentMoniker": "BlazorWasmClient\\wwwroot\\emailTexts.json",
+              "ToolTip": "D:\\Works\\Blazor\\EUP\\BlazorWasmClient\\wwwroot\\emailTexts.json",
+              "RelativeToolTip": "BlazorWasmClient\\wwwroot\\emailTexts.json",
+              "ViewState": "AgIAAAEAAAAAAAAAAAAAAA8AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2025-07-21T05:53:27.067Z",
+              "EditorCaption": ""
             }
           ]
         }
