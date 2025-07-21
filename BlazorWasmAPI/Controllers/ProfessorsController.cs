@@ -1,4 +1,5 @@
 ﻿using BlazorWasmAPI.Data;
+using BlazorWasmShared;
 using BlazorWasmShared.Enum;
 using BlazorWasmShared.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -215,6 +216,26 @@ namespace BlazorWasmAPI.Controllers
             await _context.SaveChangesAsync();
 
             return NoContent();
+        }
+
+        [HttpPut("update-email-texts-multiple")]
+        public async Task<IActionResult> UpdateEmailTextsMultiple([FromBody] EmailBatchUpdateDto dto)
+        {
+            var professors = await _context.Professors.ToListAsync();
+
+            foreach (var prof in professors)
+            {
+                if (!string.IsNullOrEmpty(prof.Text))
+                {
+                    foreach (var pair in dto.Replacements)
+                    {
+                        prof.Text = prof.Text.Replace(pair.Key, pair.Value);
+                    }
+                }
+            }
+
+            await _context.SaveChangesAsync();
+            return Ok(new { Message = "All replacements done." });
         }
     }
 }

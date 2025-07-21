@@ -1,6 +1,8 @@
 ﻿@page "/"
 @using BlazorWasmClient.Services
 @using BlazorWasmShared.Models
+
+@inject HttpClient Http
 @inject ProfessorService ProfessorService
 @inject NavigationManager Navigation
 @inject IJSRuntime JS
@@ -16,10 +18,11 @@
 }
 else
 {
-    <button @onclick="Logout">Logout</button>
-    <button @onclick="ExportProfessors">Export to Excel</button>
+    <button class="btn btn-info" @onclick ="Logout">Logout</button>
+    <button class="btn btn-danger" @onclick ="ExportProfessors">Export to Excel</button>
     <InputFile OnChange="HandleFileSelected" accept=".xlsx" />
-    <button @onclick="ImportProfessors">Upload</button>
+    <button class="btn btn-success" @onclick ="ImportProfessors">Upload</button>
+    <button class="btn btn-warning" mt-2" @onclick="UpdateEmails">Replace</button>
 
 }
 
@@ -70,6 +73,43 @@ else
         }
 
         await ProfessorService.ImportProfessorsFromExcel(selectedFile);
+    }
+
+    private string message;
+
+    private async Task UpdateEmails()
+    {
+        var replacements = new Dictionary<string, string>
+        {
+            { "I am writing to express my strong interest in joining your research group as a Ph.D. student. I graduated as the second highest-ranking student in my class for both my B.Sc. and my M.Sc. Please find my CV attached, which outlines my academic achievements and research experience",
+            "I am writing to express my interest in joining your research group. I ranked second in my class during both my B.Sc. and M.Sc. studies. My attached CV provides further details about my academic background and research experience" },
+            { "I understand that Ph.D. positions are typically advertised through official university channels, but I wanted to reach out directly to inquire about potential openings in your group. I would greatly appreciate any information on available opportunities or guidance on how to apply", 
+            "I would be very grateful if there is an opportunity to join your group as a Ph.D. student. In case there are currently no available Ph.D. openings, I would also be very interested in the possibility of a short-term research stay, where I could contribute to your ongoing projects and demonstrate my capabilities. Additionally, if you are open to it, I would be glad to collaborate with you on preparing a funding proposal to support a potential Ph.D. position" },
+            { "Thank you for your time and consideration. I look forward to the possibility of discussing this further", 
+"Thank you very much for your time and consideration. I sincerely hope for the opportunity to continue this conversation" }
+        };
+
+        var dto = new EmailBatchUpdateDto
+            {
+                Replacements = replacements
+            };
+
+        var response = await Http.PutAsJsonAsync("api/professors/update-email-texts", dto);
+
+        if (response.IsSuccessStatusCode)
+        {
+            var result = await response.Content.ReadFromJsonAsync<Dictionary<string, string>>();
+            message = result["Message"];
+        }
+        else
+        {
+            message = "Error updating email texts.";
+        }
+    }
+
+    public class EmailBatchUpdateDto
+    {
+        public Dictionary<string, string> Replacements { get; set; }
     }
 
 }
