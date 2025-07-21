@@ -2,7 +2,6 @@
 @using BlazorWasmClient.Services
 @using BlazorWasmShared.Models
 
-@inject HttpClient Http
 @inject ProfessorService ProfessorService
 @inject NavigationManager Navigation
 @inject IJSRuntime JS
@@ -94,17 +93,8 @@ else
                 Replacements = replacements
             };
 
-        var response = await Http.PutAsJsonAsync("api/professors/update-email-texts", dto);
+        message = await ProfessorService.UpdateAllEmailTextsAsync(replacements);
 
-        if (response.IsSuccessStatusCode)
-        {
-            var result = await response.Content.ReadFromJsonAsync<Dictionary<string, string>>();
-            message = result["Message"];
-        }
-        else
-        {
-            message = "Error updating email texts.";
-        }
     }
 
     public class EmailBatchUpdateDto

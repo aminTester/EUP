@@ -1,5 +1,6 @@
 ﻿using System.Net.Http;
 using System.Net.Http.Json;
+using BlazorWasmShared;
 using BlazorWasmShared.Models;
 using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.JSInterop;
@@ -152,5 +153,19 @@ namespace BlazorWasmClient.Services
             return response.IsSuccessStatusCode;
         }
 
+        public async Task<string> UpdateAllEmailTextsAsync(Dictionary<string, string> replacements)
+        {
+            var dto = new EmailBatchUpdateDto { Replacements = replacements };
+
+            var response = await _http.PutAsJsonAsync("api/professors/update-email-texts", dto);
+
+            if (response.IsSuccessStatusCode)
+            {
+                var result = await response.Content.ReadFromJsonAsync<Dictionary<string, string>>();
+                return result?["Message"] ?? "Updated.";
+            }
+
+            return "Error updating email texts.";
+        }
     }
 }

@@ -3,10 +3,6 @@
   "WorkspaceRootPath": "D:\\Works\\Blazor\\EUP\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{1416DD41-D232-4014-982E-2E7DD34A4151}|BlazorWasmClient\\BlazorWasmClient.csproj|d:\\works\\blazor\\eup\\blazorwasmclient\\wwwroot\\emailtexts.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
-      "RelativeMoniker": "D:0:0:{1416DD41-D232-4014-982E-2E7DD34A4151}|BlazorWasmClient\\BlazorWasmClient.csproj|solutionrelative:blazorwasmclient\\wwwroot\\emailtexts.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{1416DD41-D232-4014-982E-2E7DD34A4151}|BlazorWasmClient\\BlazorWasmClient.csproj|d:\\works\\blazor\\eup\\blazorwasmclient\\pages\\home.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
       "RelativeMoniker": "D:0:0:{1416DD41-D232-4014-982E-2E7DD34A4151}|BlazorWasmClient\\BlazorWasmClient.csproj|solutionrelative:blazorwasmclient\\pages\\home.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
@@ -79,32 +75,19 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "emailTexts.json",
-              "DocumentMoniker": "D:\\Works\\Blazor\\EUP\\BlazorWasmClient\\wwwroot\\emailTexts.json",
-              "RelativeDocumentMoniker": "BlazorWasmClient\\wwwroot\\emailTexts.json",
-              "ToolTip": "D:\\Works\\Blazor\\EUP\\BlazorWasmClient\\wwwroot\\emailTexts.json",
-              "RelativeToolTip": "BlazorWasmClient\\wwwroot\\emailTexts.json",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAMAAAAlAQAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2025-07-21T11:22:19.837Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
               "Title": "Home.razor",
               "DocumentMoniker": "D:\\Works\\Blazor\\EUP\\BlazorWasmClient\\Pages\\Home.razor",
               "RelativeDocumentMoniker": "BlazorWasmClient\\Pages\\Home.razor",
               "ToolTip": "D:\\Works\\Blazor\\EUP\\BlazorWasmClient\\Pages\\Home.razor",
               "RelativeToolTip": "BlazorWasmClient\\Pages\\Home.razor",
-              "ViewState": "AgIAADYAAAAAAAAAAAAAAFQAAADxAAAAAAAAAA==",
+              "ViewState": "AgIAADwAAAAAAAAAAAAAAFQAAADxAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
               "WhenOpened": "2025-07-21T10:43:43.805Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 2,
               "Title": "ProfessorsController.cs",
               "DocumentMoniker": "D:\\Works\\Blazor\\EUP\\BlazorWasmAPI\\Controllers\\ProfessorsController.cs",
               "RelativeDocumentMoniker": "BlazorWasmAPI\\Controllers\\ProfessorsController.cs",
@@ -117,7 +100,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 3,
               "Title": "Professor.cs",
               "DocumentMoniker": "D:\\Works\\Blazor\\EUP\\BlazorWasmShared\\Professor.cs",
               "RelativeDocumentMoniker": "BlazorWasmShared\\Professor.cs",
@@ -130,7 +113,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 1,
               "Title": "EditProfessor.razor",
               "DocumentMoniker": "D:\\Works\\Blazor\\EUP\\BlazorWasmClient\\Pages\\EditProfessor.razor",
               "RelativeDocumentMoniker": "BlazorWasmClient\\Pages\\EditProfessor.razor",
