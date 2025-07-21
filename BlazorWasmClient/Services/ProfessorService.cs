@@ -157,7 +157,7 @@ namespace BlazorWasmClient.Services
         {
             var dto = new EmailBatchUpdateDto { Replacements = replacements };
 
-            var response = await _http.PutAsJsonAsync("api/professors/update-email-texts", dto);
+            var response = await _http.PutAsJsonAsync($"api/professors/update-email-texts", dto);
 
             if (response.IsSuccessStatusCode)
             {

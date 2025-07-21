@@ -218,7 +218,7 @@ namespace BlazorWasmAPI.Controllers
             return NoContent();
         }
 
-        [HttpPut("update-email-texts-multiple")]
+        [HttpPut("update-email-texts")]
         public async Task<IActionResult> UpdateEmailTextsMultiple([FromBody] EmailBatchUpdateDto dto)
         {
             var professors = await _context.Professors.ToListAsync();
