@@ -14,7 +14,7 @@ namespace BlazorWasmClient.Services
         private readonly IJSRuntime _js;
 
 
-        public ProfessorService(HttpClient http, string baseUrl,IJSRuntime js)
+        public ProfessorService(HttpClient http, string baseUrl, IJSRuntime js)
         {
             _http = http;
             this._baseUrl = baseUrl;
@@ -50,7 +50,7 @@ namespace BlazorWasmClient.Services
         public async Task UpdateProfessor(Professor professor)
         {
             professor.UpdateDate = DateTime.UtcNow; // Ensure UpdateDate is always in UTC
-            if (professor.EmailDate!=null)
+            if (professor.EmailDate != null)
             {
                 professor.EmailDate = professor.EmailDate.ToUniversalTime(); // Convert to UTC
             }
@@ -166,6 +166,21 @@ namespace BlazorWasmClient.Services
             }
 
             return "Error updating email texts.";
+        }
+
+        public async Task<string> UpdateAllEmailDateAsync()
+        {
+            var dto = new EmailBatchUpdateDto { };
+
+            var response = await _http.PutAsJsonAsync($"api/professors/update-email-date", dto);
+
+            if (response.IsSuccessStatusCode)
+            {
+                var result = await response.Content.ReadFromJsonAsync<Dictionary<string, string>>();
+                return result?["Message"] ?? "Updated.";
+            }
+
+            return "Error updating email date.";
         }
     }
 }

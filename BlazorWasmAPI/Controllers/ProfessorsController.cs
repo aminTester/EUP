@@ -237,5 +237,17 @@ namespace BlazorWasmAPI.Controllers
             await _context.SaveChangesAsync();
             return Ok(new { Message = "All replacements done." });
         }
+         [HttpPut("update-email-date")]
+        public async Task<IActionResult> UpdateEmailDateMultiple([FromBody] EmailBatchUpdateDto dto)
+        {
+             var professors = await _context.Professors.ToListAsync();
+            foreach (var prof in professors)
+            {
+                prof.EmailDate=DateTime.Now.AddYears(-1000);
+                prof.Result=ResultType.Nothing;
+            }
+            await _context.SaveChangesAsync();
+             return Ok(new { Message = "All replacements done." });
+        }
     }
 }
