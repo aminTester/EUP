@@ -21,8 +21,8 @@ else
     <button class="btn btn-danger" @onclick ="ExportProfessors">Export to Excel</button>
     <InputFile OnChange="HandleFileSelected" accept=".xlsx" />
     <button class="btn btn-success" @onclick ="ImportProfessors" >Upload</button>
-    <button class="btn btn-warning mt-2" @onclick="UpdateEmails" >ReplaceText</button>
-    <button class="btn btn-warning mt-2" @onclick="UpdateEmailsDate" >ReplaceDateResult</button>
+    <button class="btn btn-warning mt-2" @onclick="UpdateEmails" disabled>ReplaceText</button>
+    <button class="btn btn-warning mt-2" @onclick="UpdateEmailsDate" disabled >ReplaceDateResult</button>
 
 }
 
